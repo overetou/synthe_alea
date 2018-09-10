@@ -27,10 +27,8 @@ namespace synthese_additive_decisionnelle
 		if (amplitudes_brutes.size() != frequences_brutes.size()) return false; // Pas le même nombre de points
 		if (hauteur_enregistrement < 0) return false; // Fréquence négative
 
-		spectre nouveau_spectre;
-		nouveau_spectre.partiels.first = amplitudes_brutes;
-		nouveau_spectre.partiels.second = frequences_brutes;
-
+		std::vector<std::pair<double, double>> partiels;
+		
 		// Etalonnage des amplitudes
 		double max_amplitude = 0;
 		for (std::size_t i_amplitude = 0; i_amplitude < amplitudes_brutes.size(); i_amplitude++)
@@ -38,17 +36,17 @@ namespace synthese_additive_decisionnelle
 			max_amplitude = std::fmax(max_amplitude, amplitudes_brutes[i_amplitude]);
 		}
 		std::transform(
-			nouveau_spectre.partiels.first.begin(),
-			nouveau_spectre.partiels.first.end(),
-			nouveau_spectre.partiels.first.begin(),
-			std::bind(std::divides<double>(), std::placeholders::_1, max_amplitude));
+			partiels.begin(),
+			partiels.end(),
+			partiels.begin(),
+			std::bind(diviser_amplitudes, std::placeholders::_1, max_amplitude));
 
 		// Transformation des fréquences en ratios par rapport à la hauteur d'enregistrement
 		std::transform(
-			nouveau_spectre.partiels.second.begin(),
-			nouveau_spectre.partiels.second.end(),
-			nouveau_spectre.partiels.second.begin(),
-			std::bind(std::divides<double>(), std::placeholders::_1, hauteur_enregistrement));
+			partiels.begin(),
+			partiels.end(),
+			partiels.begin(),
+			std::bind(diviser_frequences, std::placeholders::_1, hauteur_enregistrement));
 
 		// Calcul de la puissance du spectre
 
@@ -58,11 +56,17 @@ namespace synthese_additive_decisionnelle
 
 		// Nettoyage et tri par fréquence décroissante des partiels du spectre
 		std::sort(
-			nouveau_spectre.partiels.begin(),
-			nouveau_spectre.partiels.end(),
+			partiels.begin(),
+			partiels.end(),
 			trier_partiels_frequences_descendant);
 
 		// Ajout du nouveau spectre à la collection
+		spectre nouveau_spectre;
+		for (std::size_t i_partiel = 0; i_partiel < partiels.size(); i_partiel++)
+		{
+			nouveau_spectre.partiels[i_partiel].first = partiels[i_partiel].first;
+			nouveau_spectre.partiels[i_partiel].second = partiels[i_partiel].second;
+		}
 		collection_spectres.push_back(nouveau_spectre);
 		return true;
 	}
@@ -101,7 +105,8 @@ namespace synthese_additive_decisionnelle
 	bool calcul_collection_oscillateurs(
 			const std::vector<double> &indices_temporels,
 			const std::vector<double> &evolution_puissance,
-			const std::vector<double> &evolution_dispersion)
+			const std::vector<double> &evolution_dispersion,
+			const std::size_t nombre_oscillateurs)
 	{
 	// Tests
 
@@ -228,6 +233,7 @@ namespace synthese_additive_decisionnelle
 		else
 		{
 			// std::vector<oscillateur> collection_oscillateurs
+			// et les indices aux puissances
 			
 		}
 		lecture_fichier.close();
@@ -292,6 +298,20 @@ namespace synthese_additive_decisionnelle
 			double dispersion;
 		};		
 		std::vector<spectre> collection_spectres;
+
+		double diviser_amplitudes(
+			const std::pair<double, double> &a,
+			const double &b)
+		{
+			return (a.first / b);
+		}
+
+		double diviser_frequences(
+			const std::pair<double, double> &a,
+			const double &b)
+		{
+			return (a.second / b);
+		}
 
 		// Trier les partiels par ordre décroissant de fréquence
 		bool trier_partiels_frequences_descendant(
