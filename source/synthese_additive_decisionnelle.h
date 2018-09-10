@@ -13,19 +13,19 @@
 namespace synthese_additive_decisionnelle
 {	
 
-#pragma region Base de données
+#pragma region Base de donnÃ©es
 // A FAIRE : 
-// - paramètres pour caractériser les spectres
+// - paramÃ¨tres pour caractÃ©riser les spectres
 // - organisation du fichier texte
 
-	// Ajoute un nouveau spectre à la collection et en calcule les paramètres
+	// Ajoute un nouveau spectre Ã  la collection et en calcule les paramÃ¨tres
 	bool ajouter_spectre(
 		const std::vector<double> &amplitudes_brutes, 
 		const std::vector<double> &frequences_brutes, 
 		const double hauteur_enregistrement)
 	{
-		if (amplitudes_brutes.size() != frequences_brutes.size()) return false; // Pas le même nombre de points
-		if (hauteur_enregistrement < 0) return false; // Fréquence négative
+		if (amplitudes_brutes.size() != frequences_brutes.size()) return false; // Pas le mÃªme nombre de points
+		if (hauteur_enregistrement < 0) return false; // FrÃ©quence nÃ©gative
 
 		spectre nouveau_spectre;
 		nouveau_spectre.partiels.first = amplitudes_brutes;
@@ -43,7 +43,7 @@ namespace synthese_additive_decisionnelle
 			nouveau_spectre.partiels.first.begin(),
 			std::bind(std::divides<double>(), std::placeholders::_1, max_amplitude));
 
-		// Transformation des fréquences en ratios par rapport à la hauteur d'enregistrement
+		// Transformation des frÃ©quences en ratios par rapport Ã  la hauteur d'enregistrement
 		std::transform(
 			nouveau_spectre.partiels.second.begin(),
 			nouveau_spectre.partiels.second.end(),
@@ -54,20 +54,20 @@ namespace synthese_additive_decisionnelle
 
 		// Calcul de la dispersion du spectre
 
-		//... autres paramètres ?
+		//... autres paramÃ¨tres ?
 
-		// Nettoyage et tri par fréquence décroissante des partiels du spectre
+		// Nettoyage et tri par frÃ©quence dÃ©croissante des partiels du spectre
 		std::sort(
 			nouveau_spectre.partiels.begin(),
 			nouveau_spectre.partiels.end(),
 			trier_partiels_frequences_descendant);
 
-		// Ajout du nouveau spectre à la collection
+		// Ajout du nouveau spectre Ã  la collection
 		collection_spectres.push_back(nouveau_spectre);
 		return true;
 	}
 	
-	// Charge la collection depuis un fichier sérialisé
+	// Charge la collection depuis un fichier sÃ©rialisÃ©
 	bool charger_collection_spectres(const std::string &url_collection)
 	{
 		std::ifstream lecture_fichier;
@@ -81,7 +81,7 @@ namespace synthese_additive_decisionnelle
 		return true;
 	}
 
-	// Sauvegarde la collection vers un fichier sérialisé
+	// Sauvegarde la collection vers un fichier sÃ©rialisÃ©
 	bool sauvegarder_collection_spectres(const std::string &url_collection)
 	{
 		std::ofstream ecriture_fichier;
@@ -96,8 +96,8 @@ namespace synthese_additive_decisionnelle
 	}
 #pragma endregion
 
-#pragma region IA décisionnelle
-	// Construire le spectre évolutif dans le temps avec les spectres les plus appropriés
+#pragma region IA dÃ©cisionnelle
+	// Construire le spectre Ã©volutif dans le temps avec les spectres les plus appropriÃ©s
 	bool calcul_collection_oscillateurs(
 			const std::vector<double> &indices_temporels,
 			const std::vector<double> &evolution_puissance,
@@ -108,7 +108,7 @@ namespace synthese_additive_decisionnelle
 	//
 		std::size_t nombre_spectres = indices_temporels.size();
 
-	// Trouver pour chaque point temporel le spectre le plus approprié en fonction des paramètres de l'utilisateur à ce point
+	// Trouver pour chaque point temporel le spectre le plus appropriÃ© en fonction des paramÃ¨tres de l'utilisateur Ã  ce point
 	/*
 	// Discrete Rolle theorem
 		std::fill(XBufferStems.begin(), XBufferStems.end(), 0);
@@ -190,25 +190,25 @@ namespace synthese_additive_decisionnelle
 	// Algorithme de gauss
 
 
-	// Calcul pour chaque oscillateur des coefficients du polynôme d'interpolation
+	// Calcul pour chaque oscillateur des coefficients du polynÃ´me d'interpolation
 		for (std::size_t i_oscillateur = 0; i_oscillateur < nombre_oscillateurs; i_oscillateur++)
 		{
 			// Pour les amplitudes
 				// A^-1 * a
-			// Pour les fréquences
+			// Pour les frÃ©quences
 				// A^-1 * f
 		}
 	}
 #pragma endregion
 
-#pragma region Synthèse additive
+#pragma region SynthÃ¨se additive
 	enum parmetres_synthese
 	{
 		parametre_frequence_echantillonnage,
 		parametre_gain
 	};
 
-	// Modifie un paramètre de la synthèse
+	// Modifie un paramÃ¨tre de la synthÃ¨se
 	bool modifier_parametre_synthese(const std::size_t &parametre, const double &valeur)
 	{
 		switch (parametre)
@@ -219,7 +219,7 @@ namespace synthese_additive_decisionnelle
 		return true;
 	}
 
-	// Charge la collection depuis un fichier sérialisé
+	// Charge la collection depuis un fichier sÃ©rialisÃ©
 	bool charger_collection_oscillateurs(const std::string &url_collection)
 	{
 		std::ifstream lecture_fichier;
@@ -234,8 +234,8 @@ namespace synthese_additive_decisionnelle
 		return true;
 	}
 
-	// Sauvegarde la collection vers un fichier sérialisé
-	bool sauvegarder_collection_oscillateurs(const std::string &url_collection) // faire les 3 autres comme celui-là
+	// Sauvegarde la collection vers un fichier sÃ©rialisÃ©
+	bool sauvegarder_collection_oscillateurs(const std::string &url_collection) // faire les 3 autres comme celui-lÃ 
 	{
 		std::ofstream ecriture_fichier;
 		ecriture_fichier.open(url_collection, std::ios::out);
@@ -248,10 +248,10 @@ namespace synthese_additive_decisionnelle
 		return true;
 	}
 
-	// Synthétise le son en temps réel depuis les polynômes d'interpolation
+	// SynthÃ©tise le son en temps rÃ©el depuis les polynÃ´mes d'interpolation
 	double synthese(const std::size_t &indice_echantillon, const double &frequence, const double &velocite)
 	{
-		if (collection_oscillateurs.size() == 0) return false; // Collection d'oscillateurs pas encore chargée
+		if (collection_oscillateurs.size() == 0) return false; // Collection d'oscillateurs pas encore chargÃ©e
 
 
 		double indice_temporel; // f de indice_echantillon, frequence_echantillonnage
@@ -285,15 +285,15 @@ namespace synthese_additive_decisionnelle
 		// Spectres
 		struct spectre
 		{
-			std::vector<std::pair<double, double>> partiels; // On utilise .first : amplitudes et .second : fréquences
+			std::vector<std::pair<double, double>> partiels; // On utilise .first : amplitudes et .second : frÃ©quences
 
-			// Paramètres caractérisant le spectre
+			// ParamÃ¨tres caractÃ©risant le spectre
 			double puissance;
 			double dispersion;
 		};		
 		std::vector<spectre> collection_spectres;
 
-		// Trier les partiels par ordre décroissant de fréquence
+		// Trier les partiels par ordre dÃ©croissant de frÃ©quence
 		bool trier_partiels_frequences_descendant(
 			const std::pair<double, double> &partiel_a,
 			const std::pair<double, double> &partiel_b)
@@ -304,7 +304,7 @@ namespace synthese_additive_decisionnelle
 		// Oscillateurs [i_oscillateur][i_coefficient_lagrange].first / .second
 		std::vector<std::vector<std::pair<double, double>>> collection_oscillateurs;
 
-		// Paramètres de la synthèse
+		// ParamÃ¨tres de la synthÃ¨se
 		std::size_t frequence_echantillonnage = 44100;
 		double gain = 1;
 
