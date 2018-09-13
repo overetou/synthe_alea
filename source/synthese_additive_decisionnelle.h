@@ -19,7 +19,7 @@ namespace synthese_additive_decisionnelle
 // - organisation du fichier texte
 
 	// Ajoute un nouveau spectre à la collection et en calcule les paramètres
-	bool ajouter_spectre(
+	bool ajouter_spectre_dans_la_collection(
 		const std::vector<double> &amplitudes_brutes, 
 		const std::vector<double> &frequences_brutes, 
 		const double hauteur_enregistrement)
@@ -28,12 +28,16 @@ namespace synthese_additive_decisionnelle
 		if (hauteur_enregistrement < 0) return false; // Fréquence négative
 
 		std::vector<std::pair<double, double>> partiels;
+		for (std::size_t i_partiel = 0; i_partiel < amplitudes_brutes.size(); i_partiel++)
+		{
+			partiels.push_back({ amplitudes_brutes[i_partiel], frequences_brutes[i_partiel] });
+		}
 		
 		// Etalonnage des amplitudes
 		double max_amplitude = 0;
-		for (std::size_t i_amplitude = 0; i_amplitude < amplitudes_brutes.size(); i_amplitude++)
+		for (std::size_t i_amplitude = 0; i_amplitude < partiels.size(); i_amplitude++)
 		{
-			max_amplitude = std::fmax(max_amplitude, amplitudes_brutes[i_amplitude]);
+			max_amplitude = std::fmax(max_amplitude, partiels[i_amplitude].first);
 		}
 		std::transform(
 			partiels.begin(),
@@ -53,20 +57,38 @@ namespace synthese_additive_decisionnelle
 		// Calcul de la dispersion du spectre
 
 		//... autres paramètres ?
+		double ecart_inharmonique;
+		double somme_ecarts = 0;
+		for (std::size_t i_partiel; i_partiel < partiels.size(); i_partiel++)
+		{			
+			ecart_inharmonique = std::fmin(std::fmod(partiels[i_partiel].second, hauteur_enregistrement), std::fabs(hauteur_enregistrement - std::fmod(partiels[i_partiel].second, hauteur_enregistrement))) / hauteur_enregistrement;
+			somme_ecarts += ecart_inharmonique * partiels[i_partiel].first;
+		}
+		double somme_amplitudes = 0;
+		for (std::size_t i_partiel; i_partiel < partiels.size(); i_partiel++)
+		{
+			somme_amplitudes += partiels[i_partiel].first;
+		}
+		somme_ecarts /= somme_amplitudes;
 
-		// Nettoyage et tri par fréquence décroissante des partiels du spectre
+		// Théorème de Rolle pour nettoyer le spectre
+		for (std::size_t i_partiel = 1; i_partiel < partiels.size(); i_partiel++)
+		{
+			if (!(partiels.at(i_partiel++).first - partiels.at(i_partiel).first < 0 && 0 < partiels.at(i_partiel).first - partiels.at(i_partiel--).first))
+			{
+				partiels.at(i_partiel).first = 0;
+			}
+		}
+
+		// Tri par amplitude décroissante des partiels du spectre
 		std::sort(
 			partiels.begin(),
 			partiels.end(),
-			trier_partiels_frequences_descendant);
+			trier_partiels_amplitudes_descendant);
 
 		// Ajout du nouveau spectre à la collection
 		spectre nouveau_spectre;
-		for (std::size_t i_partiel = 0; i_partiel < partiels.size(); i_partiel++)
-		{
-			nouveau_spectre.partiels[i_partiel].first = partiels[i_partiel].first;
-			nouveau_spectre.partiels[i_partiel].second = partiels[i_partiel].second;
-		}
+		nouveau_spectre.partiels = partiels;
 		collection_spectres.push_back(nouveau_spectre);
 		return true;
 	}
@@ -80,6 +102,7 @@ namespace synthese_additive_decisionnelle
 		else
 		{
 			// charge le contenu du fichier dans collection_spectres
+			//ajouter_spectre();
 		}
 		lecture_fichier.close();
 		return true;
@@ -114,58 +137,43 @@ namespace synthese_additive_decisionnelle
 		std::size_t nombre_spectres = indices_temporels.size();
 
 	// Trouver pour chaque point temporel le spectre le plus approprié en fonction des paramètres de l'utilisateur à ce point
-	/*
-	// Discrete Rolle theorem
-		std::fill(XBufferStems.begin(), XBufferStems.end(), 0);
-		for (iComponent = 1; iComponent < nHalfComponents - 1; iComponent++)
+	
+	//
+
+		std::vector<std::vector<std::pair<double, double>>> spectres_selectionnes(indices_temporels.size());
+		
+		for (std::size_t i_spectre = 0; i_spectre < spectres_selectionnes.size(); i_spectre++)
 		{
-			if (XBuffer.at(iComponent++) - XBuffer.at(iComponent) < 0 && 0 < XBuffer.at(iComponent) - XBuffer.at(iComponent--))
+			
+			// On commence par ne garder que le bon nombre d'oscillateurs
+			spectres_selectionnes[i_spectre].resize(nombre_oscillateurs);
+
+			// Suivi des oscillateurs
+			if (i_spectre > 0)
 			{
-				XBufferStems.at(iComponent) = XBuffer.at(iComponent);
-			}
-		}
-
-		// Frequency compression
-		sortedAmplitudes.resize(nHalfComponents);
-		sortedFrequencies.resize(nHalfComponents);
-		sort2(XBufferStems, sortedAmplitudes, sortedFrequencies);
-		std::reverse(sortedAmplitudes.begin(), sortedAmplitudes.end());
-		std::reverse(sortedFrequencies.begin(), sortedFrequencies.end());
-		sortedAmplitudes.resize(nComponents);
-		sortedFrequencies.resize(nComponents);
-
-		// Oscillators following
-		if (iBuffer == 1)
-		{
-			outFrequencies = sortedFrequencies;
-			outAmplitudes = sortedAmplitudes;
-		}
-		else
-		{
-			std::fill(bDidCandidatesMatch.begin(), bDidCandidatesMatch.end(), 0);
-			sortedFrequenciesMemory = sortedFrequencies;
-			for (iComponent = 0; iComponent < nComponents; iComponent++)
-			{
-				for (iCandidate = 0; iCandidate < nComponents; iCandidate++)
+				// Parcourt le spectre précédent
+				for (std::size_t i_partiel = 0; i_partiel < nombre_oscillateurs; i_partiel++)
 				{
-					frequencyDistances.at(iCandidate) = abs((int)sortedFrequencies.at(iComponent) - (int)sortedFrequenciesMemory.at(iCandidate));
-				}
+					double min_ecart = 10000;
+					std::size_t indice_min_ecart;
 
-				sort2(frequencyDistances, frequencyDistances, iFrequencyDistancesSorted);
-
-				for (iCandidate = 0; iCandidate < nComponents; iCandidate++)
-				{
-					if (bDidCandidatesMatch.at(iFrequencyDistancesSorted[iCandidate]) == false)
+					// Trouve le partiel le plus proche dans le spectre actuel
+					for (std::size_t ii_partiel = i_partiel; ii_partiel < nombre_oscillateurs; ii_partiel++)
 					{
-						outFrequencies[iFrequencyDistancesSorted[iCandidate]] = sortedFrequencies[iComponent];
-						outAmplitudes[iFrequencyDistancesSorted[iCandidate]] = sortedAmplitudes[iComponent];
-						bDidCandidatesMatch[iFrequencyDistancesSorted[iCandidate]] = true;
-						break;
+						double ecart = std::fabs(spectres_selectionnes[i_spectre][ii_partiel].second - spectres_selectionnes[i_spectre - 1][i_partiel].second);
+						if (ecart < min_ecart)
+						{
+							min_ecart = ecart;
+							indice_min_ecart = ii_partiel;
+						}
 					}
+					// Modifier le spectre actuel pour replacer le partiel le plus proche sur la meme ligne que dans le spectre précédent
+					// retirer le trouvé du vecteur à		spectres_selectionnes[i_spectre][indice_min_ecart]
+					// le rajouter à la position voulue		spectres_selectionnes[i_spectre][i_partiel]
 				}
 			}
-			sortedFrequencies = outFrequencies;
-		}*/
+		}
+
 	// Construction de la matrice d'interpolation de Vandermonde avec les indices temporels
 		// Initialisation
 		std::vector<std::vector<std::size_t>> matrice_interpolation(2 * nombre_spectres);
@@ -214,7 +222,7 @@ namespace synthese_additive_decisionnelle
 	};
 
 	// Modifie un paramètre de la synthèse
-	bool modifier_parametre_synthese(const std::size_t &parametre, const double &valeur)
+	bool modifier_parametre_synthese(const std::size_t parametre, const double valeur)
 	{
 		switch (parametre)
 		{
@@ -255,7 +263,7 @@ namespace synthese_additive_decisionnelle
 	}
 
 	// Synthétise le son en temps réel depuis les polynômes d'interpolation
-	double synthese(const std::size_t &indice_echantillon, const double &frequence, const double &velocite)
+	double synthese(const std::size_t indice_echantillon, const double frequence, const double velocite)
 	{
 		if (collection_oscillateurs.size() == 0) return false; // Collection d'oscillateurs pas encore chargée
 
@@ -301,24 +309,24 @@ namespace synthese_additive_decisionnelle
 
 		double diviser_amplitudes(
 			const std::pair<double, double> &a,
-			const double &b)
+			const double b)
 		{
 			return (a.first / b);
 		}
 
 		double diviser_frequences(
 			const std::pair<double, double> &a,
-			const double &b)
+			const double b)
 		{
 			return (a.second / b);
 		}
 
-		// Trier les partiels par ordre décroissant de fréquence
-		bool trier_partiels_frequences_descendant(
+		// Trier les partiels par ordre décroissant d'amplitude
+		bool trier_partiels_amplitudes_descendant(
 			const std::pair<double, double> &partiel_a,
 			const std::pair<double, double> &partiel_b)
 		{
-			return (partiel_a.second > partiel_b.second);
+			return (partiel_a.first > partiel_b.first);
 		}
 
 		// Oscillateurs [i_oscillateur][i_coefficient_lagrange].first / .second
