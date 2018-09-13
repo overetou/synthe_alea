@@ -142,12 +142,9 @@ namespace synthese_additive_decisionnelle
 			ecriture_fichier << std::endl;
 
 			// Ecriture des caractéristiques
-			ecriture_fichier << "puissance = ";
-			ecriture_fichier << collection_spectres[i_spectre].puissance;
-			ecriture_fichier << "\n \n";
-			ecriture_fichier << "dispersion = ";
-			ecriture_fichier << collection_spectres[i_spectre].dispersion;
-			ecriture_fichier << "\n \n";
+			ecriture_fichier << "puissance = " << collection_spectres[i_spectre].puissance << std::endl;
+			ecriture_fichier << "dispersion = " << collection_spectres[i_spectre].dispersion << std::endl;
+			ecriture_fichier << std::endl;
 		}
 		ecriture_fichier.close();
 		return true;
@@ -269,12 +266,41 @@ namespace synthese_additive_decisionnelle
 		std::ifstream lecture_fichier;
 		lecture_fichier.open(url_collection, std::ios::in);
 		if (!lecture_fichier.is_open()) return false;
-		else
+
+		// lire nombre oscillateurs
+		// lire nombre coefficients
+
+		std::size_t nombre_oscillateurs;
+		std::size_t nombre_coefficients;
+
+		// Resize de la collection d'oscillateurs
+		collection_oscillateurs.resize(nombre_oscillateurs);
+		for (std::size_t i_oscillateur = 0; i_oscillateur < nombre_oscillateurs; i_oscillateur++)
 		{
-			// std::vector<oscillateur> collection_oscillateurs
-			// et les indices aux puissances
-			
+			collection_oscillateurs[i_oscillateur].resize(nombre_coefficients);
 		}
+
+
+		for (std::size_t i_oscillateur = 0; i_oscillateur < nombre_oscillateurs; i_oscillateur++)
+		{
+			// verifier l'indice
+
+			// Lecture des amplitudes
+			for (std::size_t i_coefficient = 0; i_coefficient < nombre_coefficients; i_coefficient++)
+			{
+				lecture_fichier >> collection_oscillateurs[i_oscillateur][i_coefficient].first;
+			}
+
+			//
+
+			// Lecture des fréquences
+			for (std::size_t i_coefficient = 0; i_coefficient < nombre_coefficients; i_coefficient++)
+			{
+				lecture_fichier >> collection_oscillateurs[i_oscillateur][i_coefficient].second;
+			}
+
+		}
+
 		lecture_fichier.close();
 		return true;
 	}
