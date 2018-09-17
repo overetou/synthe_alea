@@ -5,11 +5,11 @@
 
 using namespace synthese_additive_decisionnelle;
 
-#define url_collection_spectres "c:\spectres.txt"
-#define url_nouveau_spectre_brut "c:\spectre_brut.txt"
-#define url_collection_oscillateurs "c:\oscillateurs.txt"
+#define url_collection_spectres "c:/spectres.txt"
+#define url_nouveau_spectre_brut "c:/spectre_brut.txt"
+#define url_collection_oscillateurs "c:/oscillateurs.txt"
 
-#define url_wav "c:\out.wav"
+#define url_wav "c:/out.wav"
 
 #define nombre_oscillateurs 100
 
@@ -39,10 +39,10 @@ int	main()
 
 	// Crée le fichier wav pour quelques secondes à la fréquence 440Hz
 	modifier_parametre_synthese(
-		parmetres_synthese::parametre_frequence_echantillonnage, 
+		parmetres_synthese::parametre_frequence_echantillonnage,
 		44100);
 	modifier_parametre_synthese(
-		parmetres_synthese::parametre_gain, 
+		parmetres_synthese::parametre_gain,
 		1.0);
 
 	sauvegarder_wav(url_wav);
