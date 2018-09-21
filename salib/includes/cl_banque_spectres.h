@@ -14,7 +14,10 @@ namespace salib
       const std::string &url_collection);
 
     bool ajouter_spectre_dans_la_collection(
-      const spectre_analyse &nouveau_spectre);
+      const spectre_analyse &nouveau_spectre)
+    {
+      collection_spectres.push_back(nouveau_spectre);
+    }
 
   private:
     std::vector<spectre> collection_spectres;

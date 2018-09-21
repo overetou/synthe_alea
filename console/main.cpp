@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "includes\AudioFile.h"
-#include <cl_bank.h>
-#include <cl_synth.h>
+#include <cl_banque_spectres.h>
+#include <cl_banque_oscillateurs.h>
 
 using namespace salib;
 
@@ -20,7 +20,8 @@ int	main()
 
 	// Charger la base de données de spectres analysés
 	std::cout << "URL de la collection de spectres à utiliser" << std::endl;
-	banque_spectres collec(url_collection_spectres);
+	banque_spectres collec;
+	collec.charger_collection_spectres(url_collection_spectres);
 
 	// Ajouter un nouveau spectre à la base de données
 	//ajouter_spectre_dans_la_collection(url_nouveau_spectre_brut);
@@ -29,7 +30,8 @@ int	main()
 	std::vector<double> indices_temporels = {0.2, 0.5, 0.8};
 	std::vector<double> evolution_puissance = {0.9, 0.9, 0.9};
 	std::vector<double> evolution_dispersion = {0.9, 0.9, 0.9};
-	banque_oscillateurs synthe(
+	banque_oscillateurs synthe;
+	synthe.calcul_collection_oscillateurs(
 		indices_temporels,
 		evolution_puissance,
 		evolution_dispersion,
