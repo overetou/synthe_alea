@@ -40,10 +40,10 @@ namespace salib
       spectre nouveau_spectre;
       nouveau_spectre.importer_spectre(url_spectre);
       spectre_analyse nouveau_spectre_analyse;
-      collection_spectres.push_back(nouveau_spectre_analyse(nouveau_spectre));
+      collection_spectres.push_back(nouveau_spectre.analyser_spectre(nouveau_spectre));
     }
 
-  private:
+  protected:
     std::vector<spectre> collection_spectres;
 
 

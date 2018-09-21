@@ -1,8 +1,7 @@
 #include <iostream>
 
 #include "includes\AudioFile.h"
-#include <cl_banque_spectres.h>
-#include <cl_banque_oscillateurs.h>
+#include <cl_synthetiseur.h>
 
 using namespace salib;
 
@@ -14,14 +13,15 @@ using namespace salib;
 
 #define nombre_oscillateurs 100
 
+salib::synthetiseur synth;
+
 int	main()
 {
 	std::cout << "Programm lanched." << std::endl;
 
 	// Charger la base de données de spectres analysés
 	std::cout << "URL de la collection de spectres à utiliser" << std::endl;
-	banque_spectres collec;
-	collec.charger_collection_spectres(url_collection_spectres);
+	synth.charger_collection_spectres(url_collection_spectres);
 
 	// Ajouter un nouveau spectre à la base de données
 	char yesno;
@@ -29,7 +29,7 @@ int	main()
 	{
 		std::cout << "Ajouter un nouveau spectre ? (Y/N)" << std::endl;
 		std::cin >> yesno;
-		if (yesno == 'Y') collec.importer_spectre(url_spectre);
+		if (yesno == 'Y') synth.ajouter_spectre_dans_la_collection(url_nouveau_spectre_brut);
 		if (yesno == 'N') exit;
 	}
 
@@ -37,24 +37,18 @@ int	main()
 	std::vector<double> indices_temporels = {0.2, 0.5, 0.8};
 	std::vector<double> evolution_puissance = {0.9, 0.9, 0.9};
 	std::vector<double> evolution_dispersion = {0.9, 0.9, 0.9};
-	banque_oscillateurs synthe;
-	synthe.calcul_collection_oscillateurs(
+	synth.calcul_collection_oscillateurs(
 		indices_temporels,
 		evolution_puissance,
 		evolution_dispersion,
-		nombre_oscillateurs,
-		collec);
+		nombre_oscillateurs);
 
 	// Charger son depuis le fichier
 	//charger_collection_oscillateurs(url_collection_oscillateurs);
 
 	// Crée le fichier wav pour quelques secondes à la fréquence 440Hz
-	synthe.modifier_parametre_synthese(
-		synthe::parmetres_synthese::frequence_echantillonnage,
-		44100);
-	synthe.modifier_parametre_synthese(
-		synthe::parmetres_synthese::gain,
-		1.0);
+	synth.modifier_frequence_echantillonnage(44100);
+	synth.modifier_gain(1.0);
 
 	sauvegarder_wav(url_wav);
 
@@ -84,7 +78,7 @@ void sauvegarder_wav(const std::string &url_sortie_wav)
 			std::fill(Y.begin(), Y.end(), 0);
 			ii_echantillon = 0;
 		}
-		Y[ii_echantillon] = synthe.synthese(i_echantillon, 440, 127);
+		Y[ii_echantillon] = synth.synthese(i_echantillon, 440, 127);
 	}
 
 	outputAudioFile.save(url_sortie_wav);

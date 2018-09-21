@@ -1,21 +1,24 @@
 #pragma once
 
+#include <cl_banque_spectres.h>
 #include <cl_banque_oscillateurs.h>
 
 namespace salib
 {
-  enum parametres_synthese
-  {
-    frequence_echantillonnage,
-    gain
-  };
-
-  class synthetiseur : banque_oscillateurs
+  class synthetiseur : public banque_spectres, public banque_oscillateurs
   {
   public:
 
-    bool modifier_parametre_synthese(
-      const std::size_t parametre,
+    bool calcul_collection_oscillateurs(
+  		const std::vector<double> &indices_temporels,
+  		const std::vector<double> &evolution_puissance,
+  		const std::vector<double> &evolution_dispersion,
+  		const std::size_t nombre_oscillateurs);
+
+    bool modifier_frequence_echantillonnage(
+      const std::size_t valeur);
+
+    bool modifier_gain(
       const double valeur);
 
     double synthese(
@@ -24,6 +27,7 @@ namespace salib
       const double velocite);
 
   private:
-
+    int frequence_echantillonnage;
+    double gain;
   };
 }

@@ -1,11 +1,10 @@
-#include <cl_banque_oscillateurs.h>
+#include <cl_synthetiseur.h>
 
-bool salib::banque_oscillateurs::calcul_collection_oscillateurs(
+bool salib::synthetiseur::calcul_collection_oscillateurs(
     const std::vector<double> &indices_temporels,
     const std::vector<double> &evolution_puissance,
     const std::vector<double> &evolution_dispersion,
-    const std::size_t nombre_oscillateurs,
-    const banque_spectres &banque_spectres_spectres)
+    const std::size_t nombre_oscillateurs)
 {
 // Tests
 
@@ -19,7 +18,7 @@ bool salib::banque_oscillateurs::calcul_collection_oscillateurs(
   std::vector<std::vector<std::pair<double, double>>> spectres_selectionnes(indices_temporels.size());
 
   for (std::size_t i_spectre = 0; i_spectre < spectres_selectionnes.size(); i_spectre++)
-  {banque_spectres_spectres
+  {
 
     // On commence par ne garder que le bon nombre d'oscillateurs
     spectres_selectionnes[i_spectre].resize(nombre_oscillateurs);
