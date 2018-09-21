@@ -1,5 +1,7 @@
 #include <cl_banque_oscillateurs.h>
 
+#include <vector>
+
 #include <iostream>
 #include <fstream>
 

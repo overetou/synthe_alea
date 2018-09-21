@@ -2,15 +2,8 @@
 
 namespace salib
 {
-  class spectre
+  struct spectre
   {
-  public:
-    spectre(
-      const std::string &url_spectre)
-    {
-      importer_spectre(url_spectre);
-    }
-
     bool importer_spectre(
       const std::string &url_spectre)
     {
@@ -21,7 +14,15 @@ namespace salib
       }
     }
 
-  private:
     std::vector<std::pair<double, double>> partiels; // On utilise .first : amplitudes et .second : fréquences
+  };
+
+  struct spectre_analyse : public spectre
+  {
+    bool analyser_spectre(
+      const spectre &spectre_brut);
+
+    double puissance;
+    double dispersion;
   };
 }

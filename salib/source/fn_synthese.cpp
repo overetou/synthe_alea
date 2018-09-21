@@ -1,9 +1,13 @@
-#include <includes/cl_banque_oscillateurs.h>
+#include <cl_synthetiseur.h>
+
+#include <vector>
 
 #include <iostream>
 #include <fstream>
 
-bool salib::banque_oscillateurs::synthese(
+#define PI 3.14
+
+double salib::synthetiseur::synthese(
   const std::size_t indice_echantillon,
   const double frequence,
   const double velocite)
@@ -22,11 +26,11 @@ bool salib::banque_oscillateurs::synthese(
   {
     oscillateur_amplitude = 0;
     oscillateur_frequence = 0;
-    for (std::size_t i_coefficient = 0; i_coefficient < collection_oscillateurs[i_oscillateur].size(); i_coefficient++)
+    for (std::size_t i_coefficient = 0; i_coefficient < collection_oscillateurs[i_oscillateur].coefficients_lagrange.size() ; i_coefficient++)
     {
       indice_puissance = std::pow(indice_temporel, i_coefficient);
-      oscillateur_amplitude += collection_oscillateurs[i_oscillateur][i_coefficient].first * velocite * indice_puissance;
-      oscillateur_frequence += collection_oscillateurs[i_oscillateur][i_coefficient].second * frequence * indice_puissance;
+      oscillateur_amplitude += collection_oscillateurs[i_oscillateur].coefficients_lagrange[i_coefficient].first * velocite * indice_puissance;
+      oscillateur_frequence += collection_oscillateurs[i_oscillateur].coefficients_lagrange[i_coefficient].second * frequence * indice_puissance;
     }
     somme_oscillateurs += oscillateur_amplitude * std::sin(2 * PI * oscillateur_frequence * indice_temporel);
   }

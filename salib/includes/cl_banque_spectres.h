@@ -44,7 +44,7 @@ namespace salib
     }
 
   protected:
-    std::vector<spectre> collection_spectres;
+    std::vector<spectre_analyse> collection_spectres;
 
 
 

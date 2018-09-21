@@ -1,4 +1,7 @@
-#include <includes/cl_banque_spectres.h>
+#include <cl_banque_spectres.h>
+
+#include <vector>
+#include <utility>
 
 #include <iostream>
 #include <fstream>
@@ -10,7 +13,7 @@ bool salib::banque_spectres::sauvegarder_collection_spectres(
   ecriture_fichier.open(url_collection, std::ios::out);
   if (!ecriture_fichier.is_open()) return false;
 
-  ecriture_fichier << "nom_collection = " << url_collection << std::endl;
+  ecriture_fichier << "nom_collection = " << url_collection.c_str << std::endl;
   ecriture_fichier << "nombre_spectres = " << collection_spectres.size() << std::endl;
   ecriture_fichier << std::endl;
 
