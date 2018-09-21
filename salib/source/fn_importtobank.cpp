@@ -3,19 +3,15 @@
 #include <algorithm>
 #include <functional>
 
-bool salib::banque_spectres::ajouter_spectre_dans_la_collection(
-  const std::vector<double> &amplitudes_brutes,
-  const std::vector<double> &frequences_brutes,
-  const double hauteur_enregistrement)
+bool salib::spectre_analyse::analyser_spectre(
+  const spectre &spectre_brut)
 {
   if (amplitudes_brutes.size() != frequences_brutes.size()) return false; // Pas le même nombre de points
   if (hauteur_enregistrement < 0) return false; // Fréquence négative
 
-  std::vector<std::pair<double, double>> partiels;
-  for (std::size_t i_partiel = 0; i_partiel < amplitudes_brutes.size(); i_partiel++)
-  {
-    partiels.push_back({ amplitudes_brutes[i_partiel], frequences_brutes[i_partiel] });
-  }
+  
+
+
 
   // Etalonnage des amplitudes
   double max_amplitude = 0;

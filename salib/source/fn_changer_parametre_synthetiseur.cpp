@@ -1,4 +1,4 @@
-#include <includes/cl_synth>
+#include <cl_banque_oscillateurs.h>
 
 bool salib::banque_oscillateurs::modifier_parametre_synthese(
   const std::size_t parametre,

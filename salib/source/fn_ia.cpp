@@ -1,4 +1,4 @@
-#include <includes/cl_banque_oscillateurs.h>
+#include <cl_banque_oscillateurs.h>
 
 bool salib::banque_oscillateurs::calcul_collection_oscillateurs(
     const std::vector<double> &indices_temporels,

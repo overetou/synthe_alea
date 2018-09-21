@@ -5,12 +5,6 @@
 
 namespace salib
 {
-  enum parmetres_synthese
-  {
-    frequence_echantillonnage,
-    gain
-  };
-
   class banque_oscillateurs
   {
   public:
@@ -27,16 +21,8 @@ namespace salib
     bool sauvegarder_collection_oscillateurs(
       const std::string &url_collection);
 
-    bool modifier_parametre_synthese(
-      const std::size_t parametre,
-      const double valeur);
-
-    double synthese(
-      const std::size_t indice_echantillon,
-      const double frequence,
-      const double velocite);
-
   private:
     std::vector<oscillateur> collection_oscillateurs;
+
   };
 }
