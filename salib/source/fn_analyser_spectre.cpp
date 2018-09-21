@@ -1,4 +1,8 @@
-#include <cl_bank>
+#include <cl_banque_spectres.h>
+#include <cl_spectre.h>
+
+#include <vector>
+#include <utility>
 
 #include <algorithm>
 #include <functional>
@@ -6,12 +10,16 @@
 bool salib::spectre_analyse::analyser_spectre(
   const spectre &spectre_brut)
 {
-  if (amplitudes_brutes.size() != frequences_brutes.size()) return false; // Pas le même nombre de points
-  if (hauteur_enregistrement < 0) return false; // Fréquence négative
+  // cast
+  partiels = spectre_brut.partiels;
+  hauteur_enregistrement = spectre_brut.hauteur_enregistrement;
+
+
+  if (spectre_brut.hauteur_enregistrement < 0) return false; // Fréquence négative
 
   
 
-
+  
 
   // Etalonnage des amplitudes
   double max_amplitude = 0;
@@ -66,10 +74,6 @@ bool salib::spectre_analyse::analyser_spectre(
     partiels.end(),
     trier_partiels_amplitudes_descendant);
 
-  // Ajout du nouveau spectre à la collection
-  spectre nouveau_spectre;
-  nouveau_spectre.partiels = partiels;
-  collection_spectres.push_back(nouveau_spectre);
   return true;
 }
 

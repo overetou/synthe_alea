@@ -14,6 +14,8 @@ namespace salib
       }
     }
 
+    double hauteur_enregistrement;
+
     std::vector<std::pair<double, double>> partiels; // On utilise .first : amplitudes et .second : fréquences
   };
 

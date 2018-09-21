@@ -22,7 +22,7 @@ bool salib::banque_oscillateurs::charger_collection_oscillateurs(
   collection_oscillateurs.resize(nombre_oscillateurs);
   for (std::size_t i_oscillateur = 0; i_oscillateur < nombre_oscillateurs; i_oscillateur++)
   {
-    collection_oscillateurs[i_oscillateur].resize(nombre_coefficients);
+    collection_oscillateurs[i_oscillateur].coefficients_lagrange.resize(nombre_coefficients);
   }
 
 
@@ -33,7 +33,7 @@ bool salib::banque_oscillateurs::charger_collection_oscillateurs(
     // Lecture des amplitudes
     for (std::size_t i_coefficient = 0; i_coefficient < nombre_coefficients; i_coefficient++)
     {
-      lecture_fichier >> collection_oscillateurs[i_oscillateur][i_coefficient].first;
+      lecture_fichier >> collection_oscillateurs[i_oscillateur].coefficients_lagrange[i_coefficient].first;
     }
 
     //
@@ -41,7 +41,7 @@ bool salib::banque_oscillateurs::charger_collection_oscillateurs(
     // Lecture des fréquences
     for (std::size_t i_coefficient = 0; i_coefficient < nombre_coefficients; i_coefficient++)
     {
-      lecture_fichier >> collection_oscillateurs[i_oscillateur][i_coefficient].second;
+      lecture_fichier >> collection_oscillateurs[i_oscillateur].coefficients_lagrange[i_coefficient].second;
     }
 
   }
