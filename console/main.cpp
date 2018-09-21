@@ -13,15 +13,17 @@ using namespace salib;
 
 #define nombre_oscillateurs 100
 
-salib::synthetiseur synth;
+synthetiseur synth;
+synthetiseur *pSynth;
 
 int	main()
 {
 	std::cout << "Programm lanched." << std::endl;
+	pSynth = new synthetiseur(synth);
 
 	// Charger la base de données de spectres analysés
 	std::cout << "URL de la collection de spectres à utiliser" << std::endl;
-	synth.charger_collection_spectres(url_collection_spectres);
+	pSynth->charger_collection_spectres(url_collection_spectres);
 
 	// Ajouter un nouveau spectre à la base de données
 	char yesno;
@@ -29,7 +31,7 @@ int	main()
 	{
 		std::cout << "Ajouter un nouveau spectre ? (Y/N)" << std::endl;
 		std::cin >> yesno;
-		if (yesno == 'Y') synth.ajouter_spectre_dans_la_collection(url_nouveau_spectre_brut);
+		if (yesno == 'Y') pSynth->ajouter_spectre_dans_la_collection(url_nouveau_spectre_brut);
 		if (yesno == 'N') exit;
 	}
 
@@ -37,7 +39,7 @@ int	main()
 	std::vector<double> indices_temporels = {0.2, 0.5, 0.8};
 	std::vector<double> evolution_puissance = {0.9, 0.9, 0.9};
 	std::vector<double> evolution_dispersion = {0.9, 0.9, 0.9};
-	synth.calcul_collection_oscillateurs(
+	pSynth->calcul_collection_oscillateurs(
 		indices_temporels,
 		evolution_puissance,
 		evolution_dispersion,
@@ -47,10 +49,12 @@ int	main()
 	//charger_collection_oscillateurs(url_collection_oscillateurs);
 
 	// Crée le fichier wav pour quelques secondes à la fréquence 440Hz
-	synth.modifier_frequence_echantillonnage(44100);
-	synth.modifier_gain(1.0);
+	pSynth->modifier_frequence_echantillonnage(44100);
+	pSynth->modifier_gain(1.0);
 
 	sauvegarder_wav(url_wav);
+
+	delete pSynth;
 
 	std::cout << "Programm closed." << std::endl;
 	return (0);
@@ -78,7 +82,7 @@ void sauvegarder_wav(const std::string &url_sortie_wav)
 			std::fill(Y.begin(), Y.end(), 0);
 			ii_echantillon = 0;
 		}
-		Y[ii_echantillon] = synth.synthese(i_echantillon, 440, 127);
+		Y[ii_echantillon] = pSynth->synthese(i_echantillon, 440, 127);
 	}
 
 	outputAudioFile.save(url_sortie_wav);

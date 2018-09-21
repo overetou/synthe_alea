@@ -1,7 +1,6 @@
 #include <cl_synthetiseur.h>
 
 #include <vector>
-
 #include <iostream>
 #include <fstream>
 

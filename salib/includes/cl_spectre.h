@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <utility>
+
 namespace salib
 {
   struct spectre
@@ -8,10 +11,8 @@ namespace salib
       const std::string &url_spectre)
     {
       std::vector<std::pair<double, double>> partiels;
-      for (std::size_t i_partiel = 0; i_partiel < amplitudes_brutes.size(); i_partiel++)
-      {
-        partiels.push_back({ amplitudes_brutes[i_partiel], frequences_brutes[i_partiel] });
-      }
+      
+      
     }
 
     double hauteur_enregistrement;

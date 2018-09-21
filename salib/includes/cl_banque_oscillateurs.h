@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cl_banque_spectres.h>
 #include <cl_oscillateur.h>
 
 namespace salib
