@@ -24,12 +24,13 @@ int	main()
 	collec.charger_collection_spectres(url_collection_spectres);
 
 	// Ajouter un nouveau spectre à la base de données
-	bool yesno = true;
-	while (yesno)
+	char yesno;
+	while (true)
 	{
 		std::cout << "Ajouter un nouveau spectre ? (Y/N)" << std::endl;
 		std::cin >> yesno;
-		if (yesno) collec.importer_spectre(url_spectre);
+		if (yesno == 'Y') collec.importer_spectre(url_spectre);
+		if (yesno == 'N') exit;
 	}
 
 	// Créer un son avec les paramètres de l'utilisateur
