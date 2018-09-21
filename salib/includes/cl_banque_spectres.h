@@ -1,10 +1,10 @@
 #pragma once
 
-#include <st_spectra>
+#include <cl_spectre_analyse.h>
 
 namespace salib
 {
-  class banque
+  class banque_spectres
   {
   public:
     bool charger_collection_spectres(
@@ -14,9 +14,7 @@ namespace salib
       const std::string &url_collection);
 
     bool ajouter_spectre_dans_la_collection(
-      const std::vector<double> &amplitudes_brutes,
-      const std::vector<double> &frequences_brutes,
-      const double hauteur_enregistrement);
+      const spectre_analyse &nouveau_spectre);
 
   private:
     std::vector<spectre> collection_spectres;

@@ -1,9 +1,9 @@
-#include <includes/cl_synth>
+#include <includes/cl_banque_oscillateurs.h>
 
 #include <iostream>
 #include <fstream>
 
-bool salib::synthetiseur::synthese(
+bool salib::banque_oscillateurs::synthese(
   const std::size_t indice_echantillon,
   const double frequence,
   const double velocite)

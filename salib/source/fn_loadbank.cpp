@@ -1,9 +1,9 @@
-#include <includes/cl_bank>
+#include <includes/cl_banque_spectres.h>
 
 #include <iostream>
 #include <fstream>
 
-bool salib::banque::charger_collection_spectres(
+bool salib::banque_spectres::charger_collection_spectres(
   const std::string &url_collection)
 {
   std::ifstream lecture_fichier;

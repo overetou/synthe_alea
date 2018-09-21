@@ -1,9 +1,9 @@
-#include <includes/cl_synth>
+#include <includes/cl_banque_oscillateurs.h>
 
 #include <iostream>
 #include <fstream>
 
-bool salib::synthetiseur::charger_collection_oscillateurs(
+bool salib::banque_oscillateurs::charger_collection_oscillateurs(
   const std::string &url_collection)
 {
   std::ifstream lecture_fichier;

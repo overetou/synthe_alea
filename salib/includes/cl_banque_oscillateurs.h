@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cl_database>
-
-#include <st_osc>
+#include <cl_banque_spectres.h>
+#include <cl_oscillateur.h>
 
 namespace salib
 {
@@ -12,7 +11,7 @@ namespace salib
     gain
   };
 
-  class synthetiseur
+  class banque_oscillateurs
   {
   public:
     bool calcul_collection_oscillateurs(
@@ -20,7 +19,7 @@ namespace salib
   			const std::vector<double> &evolution_puissance,
   			const std::vector<double> &evolution_dispersion,
   			const std::size_t nombre_oscillateurs,
-        const banque &banque_spectres);
+        const banque_spectres &banque_spectres_utilisee);
 
     bool charger_collection_oscillateurs(
       const std::string &url_collection);

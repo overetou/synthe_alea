@@ -1,9 +1,10 @@
 #include <iostream>
 
 #include "includes\AudioFile.h"
-#include <synthese_additive_decisionnelle.h>
+#include <cl_bank.h>
+#include <cl_synth.h>
 
-using namespace synthese_additive_decisionnelle;
+using namespace salib;
 
 #define url_collection_spectres "c:/spectres.txt"
 #define url_nouveau_spectre_brut "c:/spectre_brut.txt"
@@ -19,7 +20,7 @@ int	main()
 
 	// Charger la base de données de spectres analysés
 	std::cout << "URL de la collection de spectres à utiliser" << std::endl;
-	charger_collection_spectres(url_collection_spectres);
+	banque_spectres collec(url_collection_spectres);
 
 	// Ajouter un nouveau spectre à la base de données
 	//ajouter_spectre_dans_la_collection(url_nouveau_spectre_brut);
@@ -28,21 +29,22 @@ int	main()
 	std::vector<double> indices_temporels = {0.2, 0.5, 0.8};
 	std::vector<double> evolution_puissance = {0.9, 0.9, 0.9};
 	std::vector<double> evolution_dispersion = {0.9, 0.9, 0.9};
-	calcul_collection_oscillateurs(
+	banque_oscillateurs synthe(
 		indices_temporels,
 		evolution_puissance,
 		evolution_dispersion,
-		nombre_oscillateurs);
+		nombre_oscillateurs,
+		collec);
 
 	// Charger son depuis le fichier
 	//charger_collection_oscillateurs(url_collection_oscillateurs);
 
 	// Crée le fichier wav pour quelques secondes à la fréquence 440Hz
-	modifier_parametre_synthese(
-		parmetres_synthese::parametre_frequence_echantillonnage,
+	synthe.modifier_parametre_synthese(
+		synthe::parmetres_synthese::frequence_echantillonnage,
 		44100);
-	modifier_parametre_synthese(
-		parmetres_synthese::parametre_gain,
+	synthe.modifier_parametre_synthese(
+		synthe::parmetres_synthese::gain,
 		1.0);
 
 	sauvegarder_wav(url_wav);
@@ -73,7 +75,7 @@ void sauvegarder_wav(const std::string &url_sortie_wav)
 			std::fill(Y.begin(), Y.end(), 0);
 			ii_echantillon = 0;
 		}
-		Y[ii_echantillon] = synthese(i_echantillon, 440, 127);
+		Y[ii_echantillon] = synthe.synthese(i_echantillon, 440, 127);
 	}
 
 	outputAudioFile.save(url_sortie_wav);

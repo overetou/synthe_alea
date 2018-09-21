@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 
-bool salib::banque::ajouter_spectre_dans_la_collection(
+bool salib::banque_spectres::ajouter_spectre_dans_la_collection(
   const std::vector<double> &amplitudes_brutes,
   const std::vector<double> &frequences_brutes,
   const double hauteur_enregistrement)

@@ -1,6 +1,6 @@
 #include <includes/cl_synth>
 
-bool salib::synthetiseur::modifier_parametre_synthese(
+bool salib::banque_oscillateurs::modifier_parametre_synthese(
   const std::size_t parametre,
   const double valeur)
 {
