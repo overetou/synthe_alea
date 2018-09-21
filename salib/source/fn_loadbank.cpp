@@ -1,6 +1,10 @@
-#include <includes/fn_loaddatabase>
+#include <includes/cl_bank>
 
-bool salib::charger_collection_spectres(const std::string &url_collection)
+#include <iostream>
+#include <fstream>
+
+bool salib::banque::charger_collection_spectres(
+  const std::string &url_collection)
 {
   std::ifstream lecture_fichier;
   lecture_fichier.open(url_collection, std::ios::in);

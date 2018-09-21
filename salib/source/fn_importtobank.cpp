@@ -1,6 +1,9 @@
-#include <includes/fn_addspectratodatabase>
+#include <includes/cl_bank>
 
-bool salib::ajouter_spectre_dans_la_collection(
+#include <algorithm>
+#include <functional>
+
+bool salib::banque::ajouter_spectre_dans_la_collection(
   const std::vector<double> &amplitudes_brutes,
   const std::vector<double> &frequences_brutes,
   const double hauteur_enregistrement)
