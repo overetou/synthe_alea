@@ -3,9 +3,9 @@
 #include <math.h>
 
 double				synthese(
-						const unsigned idx_echantillon,
-						const double frequence,
-						const double velocite,
+						unsigned idx_echantillon,
+						double frequence,
+						double velocite,
 						struct synthetiseur *synth)
 {	
 	double 			indice_temporel; // f de indice_echantillon, frequence_echantillonnage
