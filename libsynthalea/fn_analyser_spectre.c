@@ -1,4 +1,4 @@
-#include <libsynthalea/libsynthalea.h>
+#include <libsynthalea.h>
 
 void				analyser_spectre(
 						const spectre sp_brut, 
@@ -9,7 +9,7 @@ partiels = spectre_brut.partiels;
 hauteur_enregistrement = spectre_brut.hauteur_enregistrement;
 
 
-if (spectre_brut.hauteur_enregistrement < 0) return false; // Fréquence négative
+if (spectre_brut.hauteur_enregistrement < 0) return false; // Frï¿½quence nï¿½gative
 
 
 
@@ -27,7 +27,7 @@ std::transform(
 	partiels.begin(),
 	std::bind(diviser_amplitudes, std::placeholders::_1, max_amplitude));
 
-// Transformation des fréquences en ratios par rapport à la hauteur d'enregistrement
+// Transformation des frï¿½quences en ratios par rapport ï¿½ la hauteur d'enregistrement
 std::transform(
 	partiels.begin(),
 	partiels.end(),
@@ -38,7 +38,7 @@ std::transform(
 
 // Calcul de la dispersion du spectre
 
-//... autres paramètres ?
+//... autres paramï¿½tres ?
 double ecart_inharmonique;
 double somme_ecarts = 0;
 for (std::size_t i_partiel; i_partiel < partiels.size(); i_partiel++)
@@ -53,7 +53,7 @@ for (std::size_t i_partiel; i_partiel < partiels.size(); i_partiel++)
 }
 somme_ecarts /= somme_amplitudes;
 
-// Théorème de Rolle pour nettoyer le spectre
+// Thï¿½orï¿½me de Rolle pour nettoyer le spectre
 for (std::size_t i_partiel = 1; i_partiel < partiels.size(); i_partiel++)
 {
 	if (!(partiels.at(i_partiel++).first - partiels.at(i_partiel).first < 0 && 0 < partiels.at(i_partiel).first - partiels.at(i_partiel--).first))
@@ -62,7 +62,7 @@ for (std::size_t i_partiel = 1; i_partiel < partiels.size(); i_partiel++)
 	}
 }
 
-// Tri par amplitude décroissante des partiels du spectre
+// Tri par amplitude dï¿½croissante des partiels du spectre
 std::sort(
 	partiels.begin(),
 	partiels.end(),
@@ -91,7 +91,7 @@ double				diviser_frequences(
 	return (a.second / b);
 }
 
-// Trier les partiels par ordre décroissant d'amplitude
+// Trier les partiels par ordre dï¿½croissant d'amplitude
 bool				trier_partiels_amplitudes_descendant(
 						const std::pair<double, double> &partiel_a,
 						const std::pair<double, double> &partiel_b)
