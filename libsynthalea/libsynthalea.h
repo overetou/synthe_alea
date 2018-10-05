@@ -1,9 +1,12 @@
 #ifndef LIBSYNTHALEA
 #define LIBSYNTHALEA
 
-typedef double				(**matAF)[2];
-#define                     _ampl 0
-#define                     _freq 1
+typedef struct              compAF
+{
+    double ampl;
+    double freq;
+};
+typedef struct compAF		**matAF;
 
 void						alloc_matAF(unsigned dim1, unsigned dim2, matAF *mat);
 void						desalloc_matAF(matAF *mat);

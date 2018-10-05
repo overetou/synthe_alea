@@ -3,10 +3,10 @@
 
 void alloc_matAF(unsigned dim1, unsigned dim2, matAF *mat)
 {
-	double **m[2] = malloc(dim1 * sizeof(*m));
+	struct compAF **m = malloc(dim1 * sizeof(*m));
 	for (unsigned i = 0; i < dim1; i++)
 	{
-		*m = malloc(dim2 * sizeof(double[2]));
+		*m = malloc(dim2 * sizeof(struct compAF));
 	}
 	if (*mat != NULL)
 	{
