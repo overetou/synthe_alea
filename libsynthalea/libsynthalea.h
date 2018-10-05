@@ -1,22 +1,26 @@
 #ifndef LIBSYNTHALEA
 #define LIBSYNTHALEA
 
-typedef struct				compAF
+typedef struct				s_compAF
 {
     double					ampl;
     double					freq;
-};
-typedef struct				vecAF
+}							t_compAF;
+
+typedef struct				s_vecAF
 {
-    struct compAF           *comps;    
+    t_compAF           *comps;    
 	unsigned				dim1;
-};
-typedef struct				matAF
+	struct s_vecAF			*next;
+}							t_vecAF;
+
+typedef struct				s_matAF
 {
-	struct compAF			**comps;
+	t_compAF			*vec;
 	unsigned				dim1;
 	unsigned				dim2;
-};
+	//struct s_matAF			*next; Maybe later
+} 							t_matAF;
 
 void						alloc_matAF(unsigned dim1, unsigned dim2, struct matAF *mat);
 void						desalloc_matAF(struct matAF *mat);
