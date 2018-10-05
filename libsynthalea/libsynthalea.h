@@ -2,7 +2,7 @@
 #define LIBSYNTHALEA
 
 #pragma region includes
-
+#include <stdbool.h>
 #pragma endregion
 
 #pragma region typedef struct
@@ -55,25 +55,18 @@ typedef struct synthetiseur
 #pragma endregion
 
 #pragma region functions
-void						desallocation_spectre(struct spectre *sp)
-{
-	if (sp->allocation)
-	{
-		free(sp->partiels_amplitudes);
-		free(sp->partiels_frequences);
-		sp->allocation = false;
-	}
-}
-void						allocation_spectre(struct spectre *sp, unsigned n)
-{
-	if (sp->allocation)
-	{
-		desallocation_spectre(*sp);
-	}
-	sp->partiels_amplitudes = malloc(n * sizeof(double));
-	sp->partiels_frequences = malloc(n * sizeof(double));
-	sp->allocation = true;
-}
+
+void						allocation_spectre(struct spectre *sp);
+void						allocation_oscillateur(struct oscillateur *osc);
+void						allocation_banque_spectres(struct banque_spectres *bk_sp);
+void						allocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
+
+void						desallocation_spectre(struct spectre *sp);
+void						desallocation_oscillateur(struct oscillateur *osc);
+void						desallocation_banque_spectres(struct banque_spectres *bk_sp);
+void						desallocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
+
+
 void						analyser_spectre(struct spectre *sp_brut, struct spectre_analyse *sp_analyse);
 
 void						charger_spectres(const char *url_collec, struct banque_spectres *bk_sp);
