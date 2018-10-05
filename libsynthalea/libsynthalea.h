@@ -6,24 +6,6 @@
 #pragma endregion
 
 #pragma region typedef struct
-typedef struct spectre_brut //vecteur (nb_par)
-{
-	double							hauteur_enregistrement;
-	double							*partiels_amplitudes;
-	double							*partiels_frequences;
-	unsigned						nombre_partiels;
-	bool							allocation;
-};
-typedef struct spectre
-{
-	double							puissance;
-	double							dispersion;
-	double							*partiels_amplitudes;
-	double							*partiels_frequences;
-	unsigned						nombre_partiels;
-	bool							allocation;
-};
-
 
 typedef struct banque_spectres // matrice (nb_sp * nb_par)
 {
@@ -34,13 +16,6 @@ typedef struct banque_spectres // matrice (nb_sp * nb_par)
 	bool							allocation;
 };
 
-typedef struct oscillateur
-{
-	double							*coefficients_amplitudes;
-	double							*coefficients_frequences;
-	unsigned						nombre_coefficients;
-	bool							allocation;
-};
 typedef struct banque_oscillateurs // matrice (nb_osc * nb_coef)
 {
 	double							**oscillateurs_coefficients_amplitudes;
@@ -66,19 +41,11 @@ void						desallocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
 
 
 
-void						analyser_spectre(struct spectre_brut *sp_brut, struct spectre *sp);
-
-
-
-
-
-void						ajouter_spectre_dans_la_collection(struct spectre *sp, struct banque_spectres *bk_sp);
-void						ajouter_spectre_dans_la_collection(struct spectre_brut *sp_brut, struct banque_spectres *bk_sp);
-void						ajouter_spectre_dans_la_collection(const char *url_sp_brut, struct banque_spectres *bk_sp);
+void						importer_spectre(const char *url_sp_brut, struct banque_spectres *bk_sp);
 void						charger_spectres(const char *url_collec, struct banque_spectres *bk_sp);
 void						sauvegarder_spectres(const char *url_collec, struct banque_spectres *bk_sp);
 
-void						ia(const double idx_temp[], const double evo_puissance[], const double evo_disp[], unsigned nb_osc, struct banque_spectres *synth, struct banque_oscillateurs *bk_osc);
+void						construction_oscillateurs(const double idx_temp[], const double evo_puissance[], const double evo_disp[], unsigned nb_osc, struct banque_spectres *synth, struct banque_oscillateurs *bk_osc);
 void						charger_oscillateurs(const char *url_collec, struct banque_oscillateurs *bk_osc);
 void						sauvegarder_oscillateurs(const char *url_collec, struct banque_oscillateurs *bk_osc);
 

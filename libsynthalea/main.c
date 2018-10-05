@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
 	{
 		cout << "Ajouter un nouveau spectre ? (Y/N)" << '\n';
 		cin >> yesno;
-		if (yesno == 'Y') ajouter_spectre_dans_la_collection(URL_NV_SP_BRUT, bk_sp);
+		if (yesno == 'Y') importer_spectre(URL_NV_SP_BRUT, bk_sp);
 		if (yesno == 'N') exit;
 	}
 
 	// Creer une banque d'oscillateurs avec les parametres de l'utilisateur et une banque de spectres
 	struct banque_oscillateurs *bk_osc;
-	ia(indices_temporels, evolution_puissance, evolution_dispersion, nombre_osc, bk_sp, bk_osc);
+	construction_oscillateurs(indices_temporels, evolution_puissance, evolution_dispersion, nombre_osc, bk_sp, bk_osc);
 
 	// Cree le fichier wav pour quelques secondes a la frequence 440Hz
 	double output[OUT_SIZE];
