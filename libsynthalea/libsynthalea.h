@@ -16,7 +16,7 @@ typedef struct				s_vecAF
 
 typedef struct				s_matAF
 {
-	t_compAF			*vec;
+	t_vecAF			*vec;
 	unsigned				dim1;
 	unsigned				dim2;
 	//struct s_matAF			*next; Maybe later
