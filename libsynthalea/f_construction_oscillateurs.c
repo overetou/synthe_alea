@@ -5,8 +5,14 @@ void construction_oscillateurs(
 	const double		*evo_puissance, 
 	const double		*evo_dispersion, 
 	unsigned			nb_osc, 
-	matAF				*bk_sp, 
-	matAF				*bk_osc)
+	struct matAF		*bk_sp,
+	struct matAF		*bk_osc)
 {
+	unsigned nb_instants = sizeof(*idx_temps) / sizeof(double);
+	alloc_matAF(nb_osc, nb_instants, bk_osc);
 
+
+	unsigned nb_partiels_max;
+	struct matAF *bk_sp_selec;
+	alloc_matAF(nb_instants, nb_partiels_max, bk_sp_selec);
 }
