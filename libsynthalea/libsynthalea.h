@@ -3,8 +3,8 @@
 
 typedef struct				compAF
 {
-    double ampl;
-    double freq;
+    double					ampl;
+    double					freq;
 };
 typedef struct				vecAF
 {
