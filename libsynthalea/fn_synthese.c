@@ -17,8 +17,7 @@ double				synthese(
 
 	double 			somme_oscillateurs = 0;
 	for (unsigned i_oscillateur = 0; i_oscillateur < bk_osc->nombre_oscillateurs; i_oscillateur++)
-	{
-		
+	{		
 		oscillateur_amplitude = 0;
 		oscillateur_frequence = 0;
 		for (unsigned i_coefficient = 0; i_coefficient < bk_osc->nombre_coefficients; i_coefficient++)

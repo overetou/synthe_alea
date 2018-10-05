@@ -7,6 +7,9 @@
 
 #pragma region typedef struct
 
+// On pourrait tout faire comme ça plutot non ? -> pas de struct
+typedef double						**matAF[2];
+
 typedef struct banque_spectres // matrice (nb_sp * nb_par)
 {
 	double							**spectres_partiels_amplitudes;
@@ -28,18 +31,36 @@ typedef struct banque_oscillateurs // matrice (nb_osc * nb_coef)
 
 #pragma region functions
 
+
+
+
+
+void						importer_spectre(const char *url_sp_brut, matAF *banque_spectres);
+void						charger_spectres(const char *url_collec, matAF *banque_spectres);
+void						sauvegarder_spectres(const char *url_collec, matAF *banque_spectres);
+
+void						construction_oscillateurs(const double idx_temp[], const double evo_puissance[], const double evo_disp[], unsigned nb_osc, matAF *banque_spectres, matAF *banque_oscillateurs);
+void						charger_oscillateurs(const char *url_collec, matAF *banque_oscillateurs);
+void						sauvegarder_oscillateurs(const char *url_collec, matAF *banque_oscillateurs);
+
+double						synthese(unsigned idx_echantillon, double frequence, double velocite, unsigned frequence_echantillonnage, matAF *banque_oscillateurs);
+
+
+
+
+
+
+
+
+
+
+
+
 void						allocation_banque_spectres(struct banque_spectres *bk_sp);
 void						allocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
 
 void						desallocation_banque_spectres(struct banque_spectres *bk_sp);
 void						desallocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
-
-
-
-
-
-
-
 
 void						importer_spectre(const char *url_sp_brut, struct banque_spectres *bk_sp);
 void						charger_spectres(const char *url_collec, struct banque_spectres *bk_sp);
