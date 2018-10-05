@@ -1,3 +1,5 @@
+#include <libsynthalea.h>
+
 void						desallocation_spectre(struct spectre *sp)
 {
 	if (sp->allocation)

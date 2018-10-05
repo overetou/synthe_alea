@@ -6,22 +6,7 @@
 #pragma endregion
 
 #pragma region typedef struct
-typedef struct oscillateur
-{
-	double							*coefficients_amplitudes;
-	double							*coefficients_frequences;
-	unsigned						nombre_coefficients;
-	bool							allocation;
-};
-
-typedef struct banque_oscillateurs
-{
-	struct oscillateur				*collection_oscillateurs;
-	unsigned						nombre_oscillateurs;
-	bool							allocation;
-};
-
-typedef struct spectre
+typedef struct spectre_brut
 {
 	double							hauteur_enregistrement;
 	double							*partiels_amplitudes;
@@ -29,29 +14,35 @@ typedef struct spectre
 	unsigned						nombre_partiels;
 	bool							allocation;
 };
-
-typedef struct spectre_analyse
+typedef struct spectre
 {
-	struct spectre					*p_spectre_brut;
 	double							puissance;
 	double							dispersion;
+	double							*partiels_amplitudes;
+	double							*partiels_frequences;
+	unsigned						nombre_partiels;
+	bool							allocation;
 };
-
 typedef struct banque_spectres
 {
-	struct spectre_analyse			*collection_spectres;
+	struct spectre					*collection_spectres;
 	unsigned						nombre_spectres;
 	bool							allocation;
 };
 
-typedef struct synthetiseur
+typedef struct oscillateur
 {
-	struct banque_oscillateurs		*p_oscillateurs;
-	struct banque_spectres			*p_spectres;
-	int								frequence_echantillonnage;
-	double							gain;
+	double							*coefficients_amplitudes;
+	double							*coefficients_frequences;
+	unsigned						nombre_coefficients;
+	bool							allocation;
 };
-
+typedef struct banque_oscillateurs
+{
+	struct oscillateur				*collection_oscillateurs;
+	unsigned						nombre_oscillateurs;
+	bool							allocation;
+};
 #pragma endregion
 
 #pragma region functions
@@ -66,20 +57,24 @@ void						desallocation_oscillateur(struct oscillateur *osc);
 void						desallocation_banque_spectres(struct banque_spectres *bk_sp);
 void						desallocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
 
+void						analyser_spectre(struct spectre_brut *sp_brut, struct spectre *sp);
 
-void						analyser_spectre(struct spectre *sp_brut, struct spectre_analyse *sp_analyse);
 
+
+
+
+void						ajouter_spectre_dans_la_collection(struct spectre *sp, struct banque_spectres *bk_sp);
+void						ajouter_spectre_dans_la_collection(struct spectre_brut *sp_brut, struct banque_spectres *bk_sp);
+void						ajouter_spectre_dans_la_collection(const char *url_sp_brut, struct banque_spectres *bk_sp);
 void						charger_spectres(const char *url_collec, struct banque_spectres *bk_sp);
-void						ajouter_spectre_dans_la_collection(struct spectre_analyse *nv_sp, struct banque_spectres *bk_sp);
 void						sauvegarder_spectres(const char *url_collec, struct banque_spectres *bk_sp);
 
-void						calcul_collection_oscillateurs(const double idx_temp[], const double evo_puissance[], const double evo_disp[], struct banque_spectres *bk_sp, struct banque_oscillateurs *bk_osc);
+void						ia(const double idx_temp[], const double evo_puissance[], const double evo_disp[], unsigned nb_osc, struct banque_spectres *synth, struct banque_oscillateurs *bk_osc);
 void						charger_oscillateurs(const char *url_collec, struct banque_oscillateurs *bk_osc);
 void						sauvegarder_oscillateurs(const char *url_collec, struct banque_oscillateurs *bk_osc);
 
-void						modifier_frequence_echantillonnage(unsigned val, struct synthetiseur *synth);
-void						modifier_gain(double val, struct synthetiseur *synth);
-double						synthese(unsigned idx_echantillon, double frequence, double velocite, struct synthetiseur *synth);
+double						synthese(unsigned idx_echantillon, double frequence, double velocite, unsigned frequence_echantillonnage, struct banque_oscillateurs *bk_osc);
+
 #pragma endregion
 
 #endif

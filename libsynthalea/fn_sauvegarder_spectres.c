@@ -1,8 +1,10 @@
-#include <libsynthalea/libsynthalea.h>
+#include <libsynthalea.h>
+
+#include <stdio.h>
 
 void				sauvegarder_spectres(
 						const char *url_collec,
-						banque_spectres *bk_sp)
+						struct banque_spectres *bk_sp)
 {
 	std::ofstream ecriture_fichier;
 	ecriture_fichier.open(url_collection, std::ios::out);
@@ -13,30 +15,30 @@ void				sauvegarder_spectres(
 	ecriture_fichier << std::endl;
 
 	// Ecriture des spectres
-	for (std::size_t i_spectre = 0; i_spectre < collection_spectres.size(); i_spectre++)
+	for (unsigned i_spectre = 0; i_spectre < bk_sp->nombre_spectres; i_spectre++)
 	{
 		ecriture_fichier << "indice_spectre = " << i_spectre << std::endl;
 		ecriture_fichier << std::endl;
 
 		// Ecriture des amplitudes
 		ecriture_fichier << "amplitudes = " << std::endl;
-		for (std::size_t i_partiel = 0; i_partiel < collection_spectres[i_spectre].partiels.size(); i_partiel++)
+		for (unsigned i_partiel = 0; i_partiel < bk_sp->collection_spectres[i_spectre]->nombre_partiels; i_partiel++)
 		{
-			ecriture_fichier << collection_spectres[i_spectre].partiels[i_partiel].first << std::endl;
+			ecriture_fichier << bk_sp->collection_spectres[i_spectre]->partiels_amplitudes[i_partiel] << std::endl;
 		}
 		ecriture_fichier << std::endl;
 
-		// Ecriture des fréquences
+		// Ecriture des frï¿½quences
 		ecriture_fichier << "frequences = " << std::endl;
-		for (std::size_t i_partiel = 0; i_partiel < collection_spectres[i_spectre].partiels.size(); i_partiel++)
+		for (unsigned i_partiel = 0; i_partiel < bk_sp->collection_spectres[i_spectre]->nombre_partiels; i_partiel++) 
 		{
-			ecriture_fichier << collection_spectres[i_spectre].partiels[i_partiel].second << std::endl;
+			ecriture_fichier << bk_sp->collection_spectres[i_spectre]->partiels_frequences[i_partiel] << std::endl;
 		}
 		ecriture_fichier << std::endl;
 
-		// Ecriture des caractéristiques
-		ecriture_fichier << "puissance = " << collection_spectres[i_spectre].puissance << std::endl;
-		ecriture_fichier << "dispersion = " << collection_spectres[i_spectre].dispersion << std::endl;
+		// Ecriture des caractï¿½ristiques
+		ecriture_fichier << "puissance = " << bk_sp->collection_spectres[i_spectre]->puissance << std::endl;
+		ecriture_fichier << "dispersion = " << bk_sp->collection_spectres[i_spectre]->dispersion << std::endl;
 		ecriture_fichier << std::endl;
 	}
 	ecriture_fichier.close();
