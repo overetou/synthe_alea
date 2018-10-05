@@ -6,7 +6,7 @@
 #pragma endregion
 
 #pragma region typedef struct
-typedef struct spectre_brut
+typedef struct spectre_brut //vecteur (nb_par)
 {
 	double							hauteur_enregistrement;
 	double							*partiels_amplitudes;
@@ -23,10 +23,14 @@ typedef struct spectre
 	unsigned						nombre_partiels;
 	bool							allocation;
 };
-typedef struct banque_spectres
+
+
+typedef struct banque_spectres // matrice (nb_sp * nb_par)
 {
-	struct spectre					*collection_spectres;
+	double							**spectres_partiels_amplitudes;
+	double							**spectres_partiels_frequences;
 	unsigned						nombre_spectres;
+	unsigned						nombre_partiels;
 	bool							allocation;
 };
 
@@ -37,25 +41,30 @@ typedef struct oscillateur
 	unsigned						nombre_coefficients;
 	bool							allocation;
 };
-typedef struct banque_oscillateurs
+typedef struct banque_oscillateurs // matrice (nb_osc * nb_coef)
 {
-	struct oscillateur				*collection_oscillateurs;
+	double							**oscillateurs_coefficients_amplitudes;
+	double							**oscillateurs_coefficients_frequences;
 	unsigned						nombre_oscillateurs;
+	unsigned						nombre_coefficients;
 	bool							allocation;
 };
 #pragma endregion
 
 #pragma region functions
 
-void						allocation_spectre(struct spectre *sp);
-void						allocation_oscillateur(struct oscillateur *osc);
 void						allocation_banque_spectres(struct banque_spectres *bk_sp);
 void						allocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
 
-void						desallocation_spectre(struct spectre *sp);
-void						desallocation_oscillateur(struct oscillateur *osc);
 void						desallocation_banque_spectres(struct banque_spectres *bk_sp);
 void						desallocation_banque_oscillateurs(struct banque_oscillateurs *bk_osc);
+
+
+
+
+
+
+
 
 void						analyser_spectre(struct spectre_brut *sp_brut, struct spectre *sp);
 

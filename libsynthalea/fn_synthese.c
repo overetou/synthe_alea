@@ -18,13 +18,14 @@ double				synthese(
 	double 			somme_oscillateurs = 0;
 	for (unsigned i_oscillateur = 0; i_oscillateur < bk_osc->nombre_oscillateurs; i_oscillateur++)
 	{
+		
 		oscillateur_amplitude = 0;
 		oscillateur_frequence = 0;
-		for (unsigned i_coefficient = 0; i_coefficient < bk_osc->collection_oscillateurs[i_oscillateur].nombre_coefficients; i_coefficient++)
+		for (unsigned i_coefficient = 0; i_coefficient < bk_osc->nombre_coefficients; i_coefficient++)
 		{
 			indice_puissance = pow(indice_temporel, i_coefficient);
-			oscillateur_amplitude += bk_osc->collection_oscillateurs[i_oscillateur].coefficients_amplitudes[i_coefficient] * velocite * indice_puissance;
-			oscillateur_frequence += bk_osc->collection_oscillateurs[i_oscillateur].coefficients_frequences[i_coefficient] * frequence * indice_puissance;
+			oscillateur_amplitude += bk_osc->oscillateurs_coefficients_amplitudes[i_oscillateur][i_coefficient] * velocite * indice_puissance;
+			oscillateur_frequence += bk_osc->oscillateurs_coefficients_frequences[i_oscillateur][i_coefficient] * frequence * indice_puissance;
 		}
 		somme_oscillateurs += oscillateur_amplitude * sin(2 * 3.14 * oscillateur_frequence * indice_temporel);
 	}
