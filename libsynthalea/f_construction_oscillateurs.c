@@ -52,9 +52,9 @@ void construction_oscillateurs(
 	alloc_matAF(nb_instants, nb_instants, matVandermonde);
 	for (unsigned i = 0; i < nb_instants; i++)
 	{
-		for (unsigned j = 0; j < nb_instants, j++)
+		for (unsigned j = 0; j < nb_instants; j++)
 		{
-			// La matrice de Vandermonde est identique pour les amplitudes et les fréquences
+			// La matrice de Vandermonde est identique pour les amplitudes et les frï¿½quences
 			(*matVandermonde).vecs[i].comps[j].ampl = pow(idx_temps[i], j);
 		}
 	}
@@ -63,23 +63,23 @@ void construction_oscillateurs(
 	for (unsigned j = 0; j < nb_instants; j++)
 	{
 		(*matL).vecs[j].comps[j].ampl = 1;
-		for (unsigned i = 0; i < j; i++)
-		{
-			somme = 0;
-			for (unsigned k = 0; k < j - 1; k++)
-			{
-				somme = somme + (*matL).vecs[i].comps[k].ampl * (*matU).vecs[k].comps[j].ampl;
-			}
-			(*matU).vecs[k].comps[j].ampl = (*matVandermonde).vecs[i].comps[j].ampl - somme;
-		}
-		for (unsigned i = j; i < nb_instants; i++)
+		for (unsigned i = 0; i < j + 1; i++)
 		{
 			somme = 0;
 			for (unsigned k = 0; k < i - 1; k++)
 			{
 				somme = somme + (*matL).vecs[i].comps[k].ampl * (*matU).vecs[k].comps[j].ampl;
 			}
-			(*matL).vecs[k].comps[j].ampl = ((*matVandermonde).vecs[i].comps[j].ampl - somme) / (*matU).vecs[j].comps[j];
+			(*matU).vecs[i].comps[j].ampl = (*matVandermonde).vecs[i].comps[j].ampl - somme;
+		}
+		for (unsigned i = j + 1; i < nb_instants; i++)
+		{
+			somme = 0;
+			for (unsigned k = 0; k < j - 1; k++)
+			{
+				somme = somme + (*matL).vecs[i].comps[k].ampl * (*matU).vecs[k].comps[j].ampl;
+			}
+			(*matL).vecs[i].comps[j].ampl = ((*matVandermonde).vecs[i].comps[j].ampl - somme) / (*matU).vecs[j].comps[j].ampl;
 		}
 	}
 
@@ -87,11 +87,42 @@ void construction_oscillateurs(
 
 	for (unsigned i_osc = 0; i_osc < nb_osc; i_osc++)
 	{
-		// s_vecAF currentVec = vecteur ayant pour composantes les i_osc èmes composantes de chaque spectre
+		// s_vecAF b = vecteur ayant pour composantes les i_osc ï¿½mes composantes de chaque spectre
+		t_vecAF *b;
 
 		// Resolution par descente de L * y = currentVec
+		t_vecAF *y;
+		(*y).comps[0].ampl = (*b).comps[0].ampl / (*matL).vecs[0].comps[0].ampl;
+		(*y).comps[0].freq = (*b).comps[0].freq / (*matL).vecs[0].comps[0].ampl;
+		for (unsigned i = 1; i < nb_instants; i++)
+		{
+			double somme_ampl = 0;
+			double somme_freq = 0;
+			for (unsigned j = 0; j < i; j++)
+			{
+				somme_ampl = somme_ampl + (*matL).vecs[i].comps[j].ampl * (*y).comps[j].ampl;
+				somme_freq = somme_freq + (*matL).vecs[i].comps[j].freq * (*y).comps[j].freq;
+			}
+			(*y).comps[i].ampl = ((*b).comps[i].ampl - somme_ampl) / (*matL).vecs[i].comps[i].ampl;
+			(*y).comps[i].freq = ((*b).comps[i].freq - somme_freq) / (*matL).vecs[i].comps[i].freq;
+		}
 
 		// Resolution par remontee de U * x = y
+		t_vecAF *x;
+		(*x).comps[nb_instants].ampl = (*y).comps[nb_instants].ampl / (*matU).vecs[nb_instants].comps[nb_instants].ampl;
+		(*x).comps[nb_instants].freq = (*y).comps[nb_instants].freq / (*matU).vecs[nb_instants].comps[nb_instants].ampl;
+		for (unsigned i = nb_instants - 2; i >= 0; i--)
+		{
+			double somme_ampl = 0;
+			double somme_freq = 0;
+			for (unsigned j = i + 1; j < nb_instants; j++)
+			{
+				somme_ampl = somme_ampl + (*matU).vecs[i].comps[j].ampl * (*x).comps[j].ampl;
+				somme_freq = somme_freq + (*matU).vecs[i].comps[j].freq * (*x).comps[j].freq;
+			}
+			(*x).comps[i].ampl = ((*y).comps[i].ampl - somme_ampl) / (*matU).vecs[i].comps[i].ampl;
+			(*x).comps[i].freq = ((*y).comps[i].freq - somme_freq) / (*matU).vecs[i].comps[i].freq;
+		}
 
 		// Ajouter x dans bk_osc
 	}
