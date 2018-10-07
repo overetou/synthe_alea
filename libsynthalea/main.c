@@ -14,10 +14,10 @@ unsigned nombre_osc = 100;
 #define URL_WAV "c:/out.wav"
 #define OUT_SIZE 1000000
 
-t_matAF				bk_sp;
-t_matAF 			bk_osc;
-t_matAF 			*p_bk_sp;
-t_matAF 			*p_bk_osc;
+t_mat				bk_sp;
+t_mat 			bk_osc;
+t_mat 			*p_bk_sp;
+t_mat 			*p_bk_osc;
 
 int main(int argc, char *argv[])
 {

@@ -1,18 +1,18 @@
 #include <libsynthalea.h>
 #include <stdlib.h>
 
-void alloc_matAF(unsigned dim1, unsigned dim2, struct matAF *mat)
+void alloc_mat(unsigned dim1, unsigned dim2, t_mat *mat)
 {
-	struct compAF **m = malloc(dim1 * sizeof(*m));
+	t_comp **m = malloc(dim1 * sizeof(*m));
 	for (unsigned i = 0; i < dim1; i++)
 	{
-		*m = malloc(dim2 * sizeof(struct compAF));
+		*m = malloc(dim2 * sizeof(t_comp));
 	}
 	if (mat != NULL)
 	{
 		desalloc_matAF(mat);
 	}
-	mat->comps = m;
+	mat->vecs = m;
 	mat->dim1 = dim1;
 	mat->dim2 = dim2;
 }
