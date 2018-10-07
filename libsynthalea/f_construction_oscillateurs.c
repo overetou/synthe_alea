@@ -44,7 +44,7 @@ void construction_oscillateurs(
 	bk_sp_suivi.vecs[0] = bk_sp_selec.vecs[0];
 	for (unsigned i_spectre = 1; i_spectre < nb_instants; i_spectre++)
 	{
-		
+
 		//fill(bDidCandidatesMatch, false); fonction a ecrire
 		t_vec sortedFrequenciesMemory = sortedFrequencies;
 		for (unsigned iComponent = 0; iComponent < nb_osc; iComponent++)
@@ -68,7 +68,7 @@ void construction_oscillateurs(
 			}
 		}
 		sortedFrequencies = outFrequencies;
-
+	}
 
 
 
