@@ -10,9 +10,10 @@ void desalloc(
     t_vec           *p_vec)
 {
     t_comp          *p_comp;
+    unsigned        idx;
 
     p_comp = p_vec->comps;
-    while (p_vec->dim1)
+    for (idx = 0; idx < p_vec->dim1; idx++)
     {
         desalloc(p_comp);
         p_comp = p_comp->next;
@@ -23,9 +24,10 @@ void desalloc(
     t_mat           *p_mat)
 {
     t_vec           *p_vec;
+    unsigned        idx;
 
     p_vec = p_mat->vecs;
-    while (p_mat->dim2)
+    for (idx = 0; idx < p_mat->dim2; idx++)
     {
         desalloc(p_vec);
         p_vec = p_vec->next;

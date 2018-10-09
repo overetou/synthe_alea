@@ -13,9 +13,10 @@ void set(
     unsigned        i)
 {
     t_comp			*p_comp;
+    unsigned        idx;
     
     p_comp = p_vec->comps;
-    while (i)
+    for (idx = 0; idx < i; idx++)    
 	{
 		p_comp = p_comp->next;
 	}
@@ -29,9 +30,10 @@ void set(
     unsigned        j)
 {
     t_vec			*p_vec;
+    unsigned        idx;
     
     p_vec = p_mat->vecs;
-    while (j)
+    for (idx = 0; idx < j; idx++)
 	{
 		p_vec = p_vec->next;
 	}
