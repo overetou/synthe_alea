@@ -17,12 +17,6 @@ typedef union 				s_val
 	bool					valBOOL;
 }							t_val;
 
-
-
-
-
-
-
 typedef struct				s_comp
 {
     t_val					val;
@@ -43,14 +37,13 @@ typedef struct				s_mat
 	unsigned				dim2;
 } 							t_mat;
 
+t_val 						get(const t_comp *p_comp);
+t_val 						get(const t_vec *p_vec, unsigned i);
+t_val 						get(const t_mat *p_mat, unsigned i, unsigned j);
 
-t_val 						get(t_comp *p_comp);
-t_val 						get(t_vec *p_vec, unsigned i);
-t_val 						get(t_mat *p_mat, unsigned i, unsigned j);
-
-void 						set(t_comp *p_comp, t_val val);
-void 						set(t_vec *p_vec, t_val val, unsigned i);
-void 						set(t_mat *p_mat, t_val val, unsigned i, unsigned j);
+void 						set(t_comp *p_comp, const t_val val);
+void 						set(t_vec *p_vec, const t_val val, unsigned i);
+void 						set(t_mat *p_mat, const t_val val, unsigned i, unsigned j);
 
 void 						alloc(t_comp *p_comp);
 void 						alloc(t_vec *p_vec, unsigned i);

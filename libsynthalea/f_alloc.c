@@ -30,7 +30,7 @@ void alloc(
     t_vec          *p_vec;
     unsigned        idx;
 
-    p_mat = malloc(i * sizeof(t_vec));
+    p_mat = malloc(j * sizeof(t_vec));
     p_vec = p_mat->vecs;
     for (idx = 0; idx < j; idx++)
 	{

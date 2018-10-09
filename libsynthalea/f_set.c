@@ -2,14 +2,14 @@
 
 void set(
     t_comp          *p_comp,
-    t_val           val)
+    const t_val     val)
 {
     p_comp->val = val;
 }
 
 void set(
     t_vec           *p_vec,
-    t_val           val,
+    const t_val     val,
     unsigned        i)
 {
     t_comp			*p_comp;
@@ -25,7 +25,7 @@ void set(
 
 void set(
     t_mat           *p_mat,    
-    t_val           val,
+    const t_val     val,
     unsigned        i,
     unsigned        j)
 {

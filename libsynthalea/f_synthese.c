@@ -16,6 +16,7 @@ double synthese(
 	double 			somme_osc;
 	unsigned		i_osc;
 	unsigned		i_coef;
+	t_comp 			*composante;
 
 	t = i_echantillon / frequence_echantillonnage;
 	somme_osc = 0;
@@ -26,9 +27,9 @@ double synthese(
 		for (i_coef = 0; i_coef < bk_osc->dim2; i_coef++)
 		{			
 			facteur_puissance = pow(t, i_coef);
-			t_compAF composante = (*bk_osc).vecs[i_osc].comps[i_coef].compAF;
-			osc_ampl += composante.ampl * velocite * facteur_puissance;
-			osc_freq += composante.freq * frequence * facteur_puissance;
+			composante = at(bk_osc, i_coef, i_osc);
+			osc_ampl += composante->compAF.ampl * velocite * facteur_puissance;
+			osc_freq += composante->compAF.freq * frequence * facteur_puissance;
 		}
 		somme_osc += osc_ampl * sin(2 * PI * osc_freq * t);
 	}
