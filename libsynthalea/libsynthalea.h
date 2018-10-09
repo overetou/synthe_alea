@@ -57,7 +57,7 @@ void 						desalloc(t_mat *p_mat);
 
 
 
-
+/*
 void						importer_spectre(const char *url_sp_brut, t_mat *bk_sp);
 void						charger_spectres(const char *url_collec, t_mat *bk_sp);
 void						sauvegarder_spectres(const char *url_collec, t_mat *bk_sp);
@@ -65,6 +65,7 @@ void						sauvegarder_spectres(const char *url_collec, t_mat *bk_sp);
 void						construction_oscillateurs(const double *idx_temps, const double *evo_puissance, const double *evo_dispersion, unsigned nb_osc, const t_mat *bk_sp, t_mat *bk_osc);
 void						charger_oscillateurs(const char *url_collec, t_mat *bk_osc);
 void						sauvegarder_oscillateurs(const char *url_collec, t_mat *bk_osc);
+*/
 
 double						synthese(unsigned idx_echantillon, double frequence, double velocite, unsigned frequence_echantillonnage, t_mat *bk_osc);
 #endif
