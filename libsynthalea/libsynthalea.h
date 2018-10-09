@@ -4,30 +4,29 @@
 #include <stdbool.h>
 
 
-typedef struct				s_compAF
+typedef struct				s_AF
 {
     double					ampl;
     double					freq;
-	struct s_compAF			*next;
-}							t_compAF;
+}							t_AF;
 
-typedef struct				s_compDOUBLE
+typedef union 				s_val
 {
-	double					val;
-	struct s_compDOUBLE		*next;
-}							t_compDOUBLE;
+	t_AF					valAF;
+	double					valDOUBLE;
+	bool					valBOOL;
+}							t_val;
 
-typedef struct				s_compBOOL
-{
-	bool					val;
-	struct s_compBOOL		*next;
-}							t_compBOOL;
 
-typedef union 				s_comp
+
+
+
+
+
+typedef struct				s_comp
 {
-	t_compAF				compAF;
-	t_compDOUBLE			compDOUBLE;
-	t_compBOOL				compBOOL;
+    t_val					val;
+	struct s_comp			*next;
 }							t_comp;
 
 typedef struct				s_vec
@@ -44,11 +43,23 @@ typedef struct				s_mat
 	unsigned				dim2;
 } 							t_mat;
 
+t_val 						get(t_vec *p_vec, unsigned i);
+t_val 						get(t_mat *p_mat, unsigned i, unsigned j);
 
-void						alloc_vec(unsigned dim1, t_vec *vec);
-void						alloc_mat(unsigned dim1, unsigned dim2, t_mat *mat);
-void						desalloc_vec(t_vec *vec);
-void						desalloc_mat(t_mat *mat);
+void 						set(t_vec *p_vec, unsigned i, t_comp *p_comp);
+void 						set(t_mat *p_mat, unsigned i, unsigned j, t_comp *p_comp);
+
+void						alloc(unsigned dim1, t_vec *vec);
+void						alloc(unsigned dim1, unsigned dim2, t_mat *mat);
+void						desalloc(t_vec *vec);
+void						desalloc(t_mat *mat);
+
+
+
+
+
+
+
 
 void						importer_spectre(const char *url_sp_brut, t_mat *bk_sp);
 void						charger_spectres(const char *url_collec, t_mat *bk_sp);
