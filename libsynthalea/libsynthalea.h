@@ -43,18 +43,22 @@ typedef struct				s_mat
 	unsigned				dim2;
 } 							t_mat;
 
+
+t_val 						get(t_comp *p_comp);
 t_val 						get(t_vec *p_vec, unsigned i);
 t_val 						get(t_mat *p_mat, unsigned i, unsigned j);
 
-void 						set(t_vec *p_vec, unsigned i, t_comp *p_comp);
-void 						set(t_mat *p_mat, unsigned i, unsigned j, t_comp *p_comp);
+void 						set(t_comp *p_comp, t_val val);
+void 						set(t_vec *p_vec, t_val val, unsigned i);
+void 						set(t_mat *p_mat, t_val val, unsigned i, unsigned j);
 
-void						alloc(unsigned dim1, t_vec *vec);
-void						alloc(unsigned dim1, unsigned dim2, t_mat *mat);
-void						desalloc(t_vec *vec);
-void						desalloc(t_mat *mat);
+void 						alloc(t_comp *p_comp);
+void 						alloc(t_vec *p_vec, unsigned i);
+void 						alloc(t_mat *p_mat, unsigned i, unsigned j);
 
-
+void 						desalloc(t_comp *p_comp);
+void 						desalloc(t_vec *p_vec);
+void 						desalloc(t_mat *p_mat);
 
 
 

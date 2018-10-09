@@ -1,6 +1,12 @@
 #include <libsynthalea.h>
 
 t_val get(
+	t_comp 			*p_comp)
+{
+	return p_comp->val;
+}
+
+t_val get(
 	t_vec 			*p_vec, 
 	unsigned 		i)
 {
@@ -11,7 +17,7 @@ t_val get(
 	{
 		p_comp = p_comp->next;
 	}
-	return p_comp->val;
+	return get(p_comp);
 }
 
 t_val get(

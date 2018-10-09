@@ -1,9 +1,16 @@
 #include <libsynthalea.h>
 
 void set(
-    t_vec           *p_vec, 
-    unsigned        i, 
+    t_comp          *p_comp,
     t_val           val)
+{
+    p_comp->val = val;
+}
+
+void set(
+    t_vec           *p_vec,
+    t_val           val,
+    unsigned        i)
 {
     t_comp			*p_comp;
     
@@ -12,14 +19,14 @@ void set(
 	{
 		p_comp = p_comp->next;
 	}
-    p_comp->val = val;
+    set(p_comp, val);
 }
 
 void set(
-    t_mat           *p_mat, 
+    t_mat           *p_mat,    
+    t_val           val,
     unsigned        i,
-    unsigned        j,
-    t_val           val)
+    unsigned        j)
 {
     t_vec			*p_vec;
     
@@ -28,5 +35,5 @@ void set(
 	{
 		p_vec = p_vec->next;
 	}
-    set(p_vec, i, val);
+    set(p_vec, val, i);
 }
