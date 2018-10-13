@@ -7,3 +7,6 @@ libsynthalea/.vs/libsynthalea/v15/.suo
 libsynthalea/.vscode/settings.json
 /libsynthalea/clean/.vs
 /libsynthalea/clean/.vscode
+operationnal_parts/build/
+test_compil/
+lab
