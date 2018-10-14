@@ -1,13 +1,13 @@
 #include "utils.h"
 
-static void	exit(const char *to_disp)
+void	exit_msg(const char *to_disp)
 {
 	printf("%s\n", to_disp);
-	_exit();
+	_Exit(0);
 }
 
 void		test_exit(void	*test_ptr, char *msg)
 {
 	if (!test_ptr)
-		exit(msg);
+		exit_msg(msg);
 }

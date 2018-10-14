@@ -1,8 +1,8 @@
-
 #ifndef	VECTOR_H
 #define VECTOR_H
 
-#include "../src/file_management/parsing.h"//extract_word, advance_one
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef struct	s_vector
 {
@@ -11,6 +11,9 @@ typedef struct	s_vector
 	struct s_vector*	next;
 }		t_vector;
 
-void	get_vect_from_file(char *file_name);
+#include "../file_management/parsing.h"//open_file, extract_int, advance_one, close_file
+
+t_vector*	get_vect_from_file(char *file_name);
+void		free_vector(t_vector* to_free);
 
 #endif
