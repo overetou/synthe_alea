@@ -17,6 +17,7 @@ function [spectres] = importer_spectres(url)
         if N > freq_echantillonnage
             error('Signal trop long, sélectionner moins de périodes');
         end
-        spectres(:, i_spectre) = fft(echantillons, freq_echantillonnage);
+        spectre = fft(echantillons, freq_echantillonnage);
+        spectres(:, i_spectre) = spectre(1 : freq_echantillonnage / 2);
     end
 end
