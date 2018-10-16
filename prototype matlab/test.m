@@ -1,4 +1,4 @@
-banque = 'bank1';
+banque = 'bank2';
 
 %% Creer et sauvegarder banque de spectres
 banque_spectres = importer_spectres(strcat('./audio/input/', banque));
@@ -11,7 +11,8 @@ load(strcat('./spectres/', banque), 'banque_spectres');
 instants = placer_instants(10);
 
 %% Calcul et sauvegarde des oscillateurs
-spectres = choisir_spectres(banque_spectres);
+%spectres = choisir_spectres(banque_spectres);
+spectres = banque_spectres;
 oscillateurs = interpolation(spectres, instants);
 %oscillateurs = optimisation(oscillateurs);
 save(strcat('./oscillateurs/', banque), 'oscillateurs');
@@ -20,4 +21,4 @@ save(strcat('./oscillateurs/', banque), 'oscillateurs');
 load(strcat('./oscillateurs/', banque), 'oscillateurs');
 
 %% Export wav
-exporter_wav(oscillateurs, 1, 44100, './audio/output/test.wav', 4);
+exporter_wav(oscillateurs, 100, 44100, './audio/output/test.wav', 4);
