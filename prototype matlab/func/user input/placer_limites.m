@@ -1,8 +1,8 @@
 function [echantillons] = placer_limites(echantillons)
     %   PLACER_LIMITES
-    % - Affiche les racines pour faciliter la sélection
-    % - Demande à l'utilisateur de spécifier la plage de valeurs à 
-    %   conserver pour garder un nombre entier de périodes
+    % - Affiche les racines pour faciliter la selection
+    % - Demande a l'utilisateur de specifier la plage de valeurs a 
+    %   conserver pour garder un nombre entier de periodes
     
     figure;
     plot(t, echantillons);

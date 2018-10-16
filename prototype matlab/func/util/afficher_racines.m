@@ -1,6 +1,6 @@
 function [] = afficher_racines(echantillons)
     %   AFFICHER_RACINES
-    % - Affiche les racines pour faciliter la sélection
+    % - Affiche les racines pour faciliter la selection
     
     hold on;
     for i = 2 : max(size(echantillons)) - 1

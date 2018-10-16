@@ -1,10 +1,10 @@
 function [spectres] = importer_spectres(url)
     %   IMPORTER_SPECTRES
-    % - Charge en mémoire chaque .wav du dossier 
-    % - Demande à l'utilisateur de spécifier la plage de valeurs à 
-    %   conserver pour garder un nombre entier de périodes
+    % - Charge en memoire chaque .wav du dossier 
+    % - Demande a l'utilisateur de specifier la plage de valeurs a 
+    %   conserver pour garder un nombre entier de periodes
     % - Effectue une FFT pour passer dans le domaine spectral
-    % - [A FAIRE] Analyse les différentes caractéristiques
+    % - [A FAIRE] Analyse les differentes caracteristiques
     
     liste_fichiers = dir([url, '/*.wav']);
     for i_spectre = 1 : length(liste_fichiers)
@@ -14,9 +14,9 @@ function [spectres] = importer_spectres(url)
         if N < freq_echantillonnage
             echantillons(N + 1 : freq_echantillonnage) = 0;
         end
-        spectres(:, i_spectre) = fft(echantillons, freq_echantillonnage);
         if N > freq_echantillonnage
-            spectres(:, i_spectre) = interp1(spectre, freq_echantillonnage);
+            error('Signal trop long, sélectionner moins de périodes');
         end
+        spectres(:, i_spectre) = fft(echantillons, freq_echantillonnage);
     end
 end
