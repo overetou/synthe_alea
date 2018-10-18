@@ -12,7 +12,12 @@ function [spectres] = importer_spectres(url)
         echantillons = placer_limites(echantillons);
         N = max(size(echantillons));
         if N < freq_echantillonnage
-            echantillons(N + 1 : freq_echantillonnage) = 0;
+            i = 1;
+            while (i + 1) * N - 1 < freq_echantillonnage
+                echantillons(i * N + 1 : (i + 1) * N) = echantillons(1 : N);
+                i = i + 1;
+            end
+            echantillons(size(echantillons, 1) + 1 : freq_echantillonnage) = 0;
         end
         if N > freq_echantillonnage
             error('Signal trop long, sélectionner moins de périodes');
