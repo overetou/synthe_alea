@@ -21,4 +21,4 @@ save(strcat('./oscillateurs/', banque), 'oscillateurs');
 load(strcat('./oscillateurs/', banque), 'oscillateurs');
 
 %% Export wav
-exporter_wav(oscillateurs, 50, 44100, './audio/output/test.wav', 4);
+exporter_wav(oscillateurs, 20, 44100, strcat('./audio/output/', banque, '.wav'), 4);
