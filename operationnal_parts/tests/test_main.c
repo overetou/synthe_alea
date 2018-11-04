@@ -1,10 +1,15 @@
 #include "../includes/utils.h"
-#define TEST_ARRAY_LENGTH 1
+#define TEST_ARRAY_LENGTH 2
 //every test function returns true or false. Char type is used as return because it is the smallest type in term of memory usage.
 
 char	is_digit_test(void)
 {
 	return (is_digit('0') && is_digit('9') && !is_digit('x') && !is_digit('/') && !is_digit(':'));
+}
+
+char	str_to_int_test(void)
+{
+	return (1552 == str_to_int("1552") && 0 == str_to_int("0") && -966235 == str_to_int("-966235") && 0 == str_to_int("potiron"));
 }
 
 void	do_tests(char	(**test_array)(void))
@@ -35,6 +40,7 @@ int	main(void)
 	char	(*test_array[TEST_ARRAY_LENGTH])(void);
 	
 	test_array[0] = is_digit_test;
+	test_array[1] = str_to_int_test;
 
 	do_tests(test_array);
 	return (0);
