@@ -1,3 +1,4 @@
+//Converts a chain of char into an int. Handle negative values. If it cannot extract a value, 0 will be returned.
 int	str_to_int(const char* str)
 {
 	int	n;

@@ -2,14 +2,19 @@
 #define TEST_ARRAY_LENGTH 1
 //every test function returns true or false. Char type is used as return because it is the smallest type in term of memory usage.
 
-void	do_tests(test_array* (char*)(*))
+char	is_digit_test(void)
+{
+	return (is_digit('0') && is_digit('9') && !is_digit('x') && !is_digit('/') && !is_digit(':'));
+}
+
+void	do_tests(char	(**test_array)(void))
 {
 	int 	i = 0;
 	char	visual[TEST_ARRAY_LENGTH];
 
 	while (i != TEST_ARRAY_LENGTH)
 	{
-		if (test_array[i])
+		if ((*test_array[i])())
 			visual[i] = '.';
 		else
 		{
@@ -18,21 +23,18 @@ void	do_tests(test_array* (char*)(*))
 		}
 		i++;
 	}
+	visual[TEST_ARRAY_LENGTH] = 0;
 	printf("%s\n", visual);
 }
 
-char	test_vector_extraction
-{
-	
-}
-
-
-//main creates an array of test functions and test them one by one.
+//main creates an array of test functions with an array of function pointers and test them one by one.
+//To add one test just increment TEST_ARRAY_LENGTH by one on the second line and add the function to its corresponding index on the array in the main.
+//You can also do freestyle testing by calling whatever function you want, however you want.
 int	main(void)
 {
-	test_array	(char*)(*)[TEST_ARRAY_LENGTH];
+	char	(*test_array[TEST_ARRAY_LENGTH])(void);
 	
-	test_array[0] = test_vector_extraction();
+	test_array[0] = is_digit_test;
 
 	do_tests(test_array);
 	return (0);

@@ -15,5 +15,6 @@ typedef struct	s_vector
 
 t_vector*	get_vect_from_file(char *file_name);
 void		free_vector(t_vector* to_free);
+void		display_vector(t_vector* vector);
 
 #endif

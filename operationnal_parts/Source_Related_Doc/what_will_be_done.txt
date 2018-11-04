@@ -1,0 +1,3 @@
+-The parser currently reads in the file char by char, wich is highly inefficient. Next step : add a buffer to chop big lumps of text at each system call.
+-Oscar -> study inclusion system to get a better understanding of how it works and come up with a better file structure.
+3-Add const key word everywhere where it is possible to secure and maybe optimize the code.

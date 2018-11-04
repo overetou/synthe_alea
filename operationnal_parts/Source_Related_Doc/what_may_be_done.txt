@@ -1,0 +1,2 @@
+-Make the parser handle negative values.
+-Make the parser display line and or char number where he encounters a problem, when he does.
